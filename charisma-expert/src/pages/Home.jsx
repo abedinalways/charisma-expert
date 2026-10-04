@@ -127,7 +127,7 @@ function WorkflowsSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {modules.map(({ icon, iconBg, title, description }) => (
             <div key={title} className="card hover:shadow-lg transition-shadow border border-gray-200 rounded-2xl p-8 bg-white">
               <div className={`${iconBg} w-12 h-12 rounded-xl flex items-center justify-center mb-5`}>
