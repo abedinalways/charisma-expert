@@ -183,7 +183,7 @@ export default function SignUp() {
               disabled={loading}
             />
             <span className="text-sm text-amber-950 leading-relaxed">
-              I understand that KLYVOREK is currently provided for controlled evaluation. I will not enter live CJI, NCIC information, personally identifiable case information, active investigative information, or unredacted police records.
+              I understand that KLYVOREK is a training platform using fictional scenarios. I will not enter live CJI, NCIC information, personally identifiable case information, active investigative information, or unredacted police records.
             </span>
           </label>
 
@@ -194,7 +194,7 @@ export default function SignUp() {
             className="btn-blue-gradient w-full py-4 text-base flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {loading && <Loader2 size={18} className="animate-spin" />}
-            {loading ? 'Creating Account…' : 'Join the Evaluation Program'}
+            {loading ? 'Creating Account…' : 'Create Account'}
           </button>
         </form>
 
