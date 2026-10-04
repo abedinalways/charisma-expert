@@ -31,7 +31,7 @@ export default function Navbar() {
   return (
     <header className="bg-white border-b border-gray-100 sticky top-0 z-40">
       {/* Full-width bar — logo left, nav truly centered, auth right */}
-      <div className="w-full px-6 lg:px-10 xl:px-16">
+      <div className="w-full px-4 sm:px-6 lg:px-6 xl:px-12">
         <div className="relative flex items-center h-16">
 
           {/* Logo — pinned to the left */}
@@ -43,21 +43,21 @@ export default function Navbar() {
             />
             <div className="leading-tight hidden sm:block whitespace-nowrap">
               <p className="text-base font-extrabold tracking-[0.16em] text-navy-800">KLYVOREK</p>
-              <p className="text-[9px] tracking-[0.06em] text-gray-500">Police Documentation Training Platform</p>
+              <p className="text-[9px] tracking-[0.06em] text-gray-500 hidden xl:block">Police Documentation Training Platform</p>
             </div>
           </Link>
 
           {/* Nav links — absolutely centered in the full bar */}
-          <nav className="hidden md:flex items-center gap-3 lg:gap-5 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-5 absolute left-1/2 -translate-x-1/2">
             {navLinks.map(({ label, to }) => (
               <Link
                 key={to}
                 to={to}
-                className={
+                className={`whitespace-nowrap transition-colors duration-150 text-xs xl:text-sm ${
                   pathname === to
-                    ? 'nav-link-active'
-                    : 'nav-link'
-                }
+                    ? 'text-navy-800 font-semibold'
+                    : 'text-gray-700 hover:text-navy-800 font-medium'
+                }`}
               >
                 {label}
               </Link>
@@ -65,37 +65,36 @@ export default function Navbar() {
           </nav>
 
           {/* Auth buttons — pinned to the right */}
-          <div className="flex items-center gap-3 ml-auto z-10">
+          <div className="flex items-center gap-2 xl:gap-3 ml-auto z-10">
             {user ? (
               <Link
                 to="/dashboard"
-                className="bg-navy-800 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-navy-700 transition-colors flex items-center gap-2"
+                className="bg-navy-800 text-white text-xs xl:text-sm font-semibold px-3 xl:px-4 py-2 rounded-lg hover:bg-navy-700 transition-colors flex items-center gap-2"
               >
-                {/* <LayoutDashboard size={16} /> */}
                 Dashboard
               </Link>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-navy-800 transition-colors"
+                  className="hidden sm:flex items-center gap-1.5 text-xs xl:text-sm font-medium text-gray-700 hover:text-navy-800 transition-colors whitespace-nowrap"
                 >
                   <Shield size={15} strokeWidth={1.5} />
                   Officer Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-navy-800 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-navy-700 transition-colors"
+                  className="bg-navy-800 text-white text-xs xl:text-sm font-semibold px-3 xl:px-4 py-2 rounded-lg hover:bg-navy-700 transition-colors whitespace-nowrap"
                 >
                   Start Free Evaluation
                 </Link>
               </>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile/Tablet Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden flex items-center justify-center p-2 -mr-2 text-gray-600 hover:text-navy-800 transition-colors"
+              className="lg:hidden flex items-center justify-center p-2 -mr-2 text-gray-600 hover:text-navy-800 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -105,9 +104,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile/Tablet Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 absolute top-full left-0 w-full shadow-lg z-50">
+        <div className="lg:hidden bg-white border-t border-gray-100 absolute top-full left-0 w-full shadow-lg z-50">
           <div className="px-6 py-4 flex flex-col gap-4">
             {navLinks.map(({ label, to }) => (
               <Link
