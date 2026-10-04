@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Shield, BookOpen, FileText, Search, UserCheck, CheckCircle2, Clock, Sparkles } from 'lucide-react'
+import { Shield, BookOpen, FileText, Search, UserCheck, CheckCircle2, Clock, Sparkles, GraduationCap, ArrowRight } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -105,11 +105,37 @@ function WorkflowsSection() {
             KLYVOREK gives officers realistic fictional scenarios to practice incident reports, search warrants, and arrest warrants, with AI assistance.
           </p>
 
-          <div className="max-w-3xl mx-auto bg-blue-50/70 border border-blue-100 rounded-2xl p-6 text-left shadow-sm">
-            <h3 className="font-bold text-navy-800 text-base mb-1">Practice Starts With the Scenario</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Realistic practice requires realistic facts. The KLYVOREK Institute develops and houses fictional scenarios and fact patterns designed for incident report, search warrant, and arrest warrant practice.
-            </p>
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-blue-50/90 via-white to-slate-50 border border-blue-200/80 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all text-left">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+                <GraduationCap size={30} strokeWidth={2} />
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">
+                    Training Foundation
+                  </span>
+                  <h3 className="font-bold text-gray-900 text-lg sm:text-xl">
+                    Practice Starts With the Scenario
+                  </h3>
+                </div>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  Realistic practice requires realistic facts. The <span className="font-semibold text-gray-800">KLYVOREK Institute</span> develops and houses fictional scenarios and fact patterns designed for incident report, search warrant, and arrest warrant practice.
+                </p>
+                <div className="mt-4 pt-3 border-t border-blue-100/80 flex flex-wrap items-center justify-between gap-3">
+                  <Link
+                    to="/institute"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors group"
+                  >
+                    <span>Explore Scenario Library at KLYVOREK Institute</span>
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <span className="text-xs text-gray-500 font-medium">
+                    Step 1: Choose Scenario &rarr; Step 2: Practice Modules Below
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
