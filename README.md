@@ -2,7 +2,7 @@
 
 KLYVOREK is a robust Django REST backend designed for AI-assisted law-enforcement documentation. It provides a secure platform for generating incident reports, search warrants, and arrest warrants using AI, complete with subscriptions, a blog/media module, and a comprehensive admin panel.
 
-## 🌟 Core Features
+## Core Features
 
 - **AI-Assisted Document Generation**: Automatically draft incident reports and warrants (Search/Arrest) using local or cloud-based LLMs.
 - **RAG (Retrieval-Augmented Generation)**: Uses `pgvector` and local embeddings for context-aware document generation based on agency rules and training documents.

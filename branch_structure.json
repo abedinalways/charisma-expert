@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "initial-project",
+    "main",
+    "origin",
+    "refactor/project"
+  ],
+  "parent": {
+    "initial-project": "main",
+    "main": null,
+    "origin": "main",
+    "refactor/project": "main"
+  },
+  "order": [
+    "main",
+    "initial-project",
+    "origin",
+    "refactor/project"
+  ]
+}
