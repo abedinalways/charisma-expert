@@ -56,10 +56,10 @@ function HeroSection() {
       <img
         src="/assets/home.png"
         alt="Police officer using the KLYVOREK platform"
-        className="absolute inset-0 w-full h-full object-cover object-top opacity-70"
+        className="absolute inset-0 w-full h-full object-cover object-[78%_18%] sm:object-[82%_20%] lg:object-[80%_top] opacity-65 sm:opacity-70"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent" />
-      <div className="relative z-10 w-full px-6 lg:px-10 xl:px-16 py-24">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-950/85 via-gray-900/80 to-gray-950/90 sm:bg-gradient-to-r sm:from-gray-900/95 sm:via-gray-900/75 sm:to-transparent" />
+      <div className="relative z-10 w-full px-6 lg:px-10 xl:px-16 py-16 sm:py-20 lg:py-24">
         <div className="max-w-3xl xl:max-w-5xl">
           <span className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-sm font-semibold px-4 py-2 rounded-full mb-6">
             Self-Paced Police Documentation Training
