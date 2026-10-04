@@ -108,11 +108,8 @@ export default function SignUp() {
         </button>
 
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">Create Evaluation Account</h1>
-        <p className="text-center text-gray-700 font-medium mb-3">
-          Register to evaluate KLYVOREK with fictional or properly de-identified sample data. A 6-digit verification code will be emailed to you.
-        </p>
-        <p className="text-center text-amber-800 text-sm bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-8">
-          Do not submit live Criminal Justice Information (CJI), real case details, or other restricted operational data. KLYVOREK is not CJIS compliant at this stage.
+        <p className="text-center text-gray-700 font-medium mb-8">
+          Register to evaluate KLYVOREK. A 6-digit verification code will be emailed to you.
         </p>
 
         {globalError && (

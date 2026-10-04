@@ -29,12 +29,10 @@ def _default_plans() -> list:
         {
             'name': 'free',
             'display_name': 'Free Evaluation',
-            'description': ('Evaluate KLYVOREK for 14 days with 10 total document generations. '
-                            'No credit card required. Incident reports, search warrants, arrest '
-                            'warrants, PDF export, and editable DOCX export are included.'),
+            'description': 'Try KLYVOREK free for up to 3 document generations. No credit card required.',
             'price_monthly': 0, 'price_yearly': 0,
-            'document_limit': 10,
-            'warrant_document_limit': 10,
+            'document_limit': 3,
+            'warrant_document_limit': 3,
             'can_incident_report': True,
             'can_search_warrant': True,
             'can_arrest_warrant': True,

@@ -228,13 +228,18 @@ class UserDetailView(APIView):
         if new_plan_name:
             plan = Plan.objects.filter(name__iexact=new_plan_name).first()
             if plan:
+                sub_defaults = {'plan': plan, 'status': 'active'}
+                if plan.name != 'free':
+                    sub_defaults['stripe_subscription_id'] = f'admin_assigned_{user.id}'
                 subscription, created = Subscription.objects.get_or_create(
                     user=user,
-                    defaults={'plan': plan, 'status': 'active'}
+                    defaults=sub_defaults,
                 )
                 if not created:
                     subscription.plan = plan
                     subscription.status = 'active'
+                    if plan.name != 'free' and not subscription.stripe_subscription_id:
+                        subscription.stripe_subscription_id = f'admin_assigned_{user.id}'
                     subscription.save()
             else:
                 return Response({'error': {'detail': f'Plan "{new_plan_name}" not found.'}}, status=400)

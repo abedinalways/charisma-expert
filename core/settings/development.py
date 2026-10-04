@@ -13,3 +13,8 @@ ALLOWED_HOSTS = ['*']
 
 # Relax CORS during local frontend development.
 CORS_ALLOW_ALL_ORIGINS = True
+
+# When running locally without Redis or a separate Celery worker daemon,
+# execute Celery tasks synchronously in-process.
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES = True

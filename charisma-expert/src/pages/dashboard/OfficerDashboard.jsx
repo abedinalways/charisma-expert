@@ -13,7 +13,8 @@ import {
   User,
   ShieldCheck,
   Clock,
-  Loader2
+  Loader2,
+  ExternalLink
 } from 'lucide-react';
 
 const DOC_TYPE_LABELS = {
@@ -166,6 +167,33 @@ export default function OfficerDashboard() {
         </div>
       </div>
 
+      {/* Need a Scenario? Banner */}
+      <div className="bg-gradient-to-r from-blue-50/80 via-white to-blue-50/40 rounded-2xl p-6 sm:p-7 border border-blue-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="max-w-2xl">
+          <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest bg-blue-100/80 px-2.5 py-1 rounded-md mb-2 inline-block">
+            KLYVOREK INSTITUTE
+          </span>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 font-serif">Need a Scenario?</h2>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Choose a fictional scenario and fact pattern from the KLYVOREK Institute, then return here to complete the assigned Incident Report, Search Warrant, or Arrest Warrant exercise.
+          </p>
+        </div>
+
+        <div className="shrink-0 flex flex-col items-start md:items-end gap-1.5">
+          <a
+            href="https://klyvorekinstitute.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-sm transition-all"
+          >
+            Visit the KLYVOREK Institute <ExternalLink size={15} />
+          </a>
+          <span className="text-[10px] font-semibold text-gray-400 tracking-wider uppercase">
+            PRACTICE | IMPROVE | BUILD CONFIDENCE
+          </span>
+        </div>
+      </div>
+
       <div>
         <h2 className="text-xl font-bold text-gray-900 mb-6 font-serif">Document Generation Modules</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -174,9 +202,9 @@ export default function OfficerDashboard() {
             <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
               <ShieldAlert className="text-white" size={28} />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">AI Incident Reports</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">Incident Report Practice</h3>
             <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-              Generate comprehensive, structured incident narratives from raw field notes and facts.
+              Practice turning fictional facts and field notes into clear, structured incident narratives with AI assistance.
             </p>
             <Link to="/dashboard/create/incident-report" className="text-blue-600 font-semibold text-sm flex items-center hover:text-blue-700">
               Launch Module <ArrowRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
@@ -189,9 +217,9 @@ export default function OfficerDashboard() {
               <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
                 <FileSearch className="text-white" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">AI Search Warrants</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">Search Warrant Practice</h3>
               <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-                Structure a search warrant application draft for authorized legal and supervisory review.
+                Practice organizing fictional facts into a clear, structured search warrant application with AI assistance.
               </p>
               <Link to="/dashboard/create/search-warrant" className="text-blue-600 font-semibold text-sm flex items-center hover:text-blue-700">
                 Launch Module <ArrowRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
@@ -203,9 +231,9 @@ export default function OfficerDashboard() {
               <div className="w-14 h-14 bg-gray-100 border-2 border-gray-200 rounded-2xl flex items-center justify-center mb-6">
                 <FileSearch className="text-gray-400" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-400 mb-3 font-serif">AI Search Warrants</h3>
+              <h3 className="text-xl font-bold text-gray-400 mb-3 font-serif">Search Warrant Practice</h3>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Structure an arrest warrant application draft for authorized legal and supervisory review.
+                Practice organizing fictional facts into a clear, structured search warrant application with AI assistance.
               </p>
               <Link to="/pricing" className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">
                 Upgrade to Access
@@ -219,9 +247,9 @@ export default function OfficerDashboard() {
               <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
                 <UserPlus className="text-white" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">AI Arrest Warrants</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif">Arrest Warrant Practice</h3>
               <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-                Create detailed arrest warrant applications based on suspect and case entity data.
+                Practice organizing fictional suspect, offense, and case facts into a clear, structured arrest warrant application with AI assistance.
               </p>
               <Link to="/dashboard/create/arrest-warrant" className="text-blue-600 font-semibold text-sm flex items-center hover:text-blue-700">
                 Launch Module <ArrowRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
@@ -233,9 +261,9 @@ export default function OfficerDashboard() {
               <div className="w-14 h-14 bg-gray-100 border-2 border-gray-200 rounded-2xl flex items-center justify-center mb-6">
                 <UserPlus className="text-gray-400" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-400 mb-3 font-serif">AI Arrest Warrants</h3>
+              <h3 className="text-xl font-bold text-gray-400 mb-3 font-serif">Arrest Warrant Practice</h3>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Create detailed arrest warrant applications based on suspect and case entity data.
+                Practice organizing fictional suspect, offense, and case facts into a clear, structured arrest warrant application with AI assistance.
               </p>
               <Link to="/pricing" className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">
                 Upgrade to Access
@@ -244,6 +272,7 @@ export default function OfficerDashboard() {
           )}
         </div>
       </div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Documents */}

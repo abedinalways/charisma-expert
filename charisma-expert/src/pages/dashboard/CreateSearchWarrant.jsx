@@ -110,8 +110,8 @@ export default function CreateSearchWarrant() {
            <FileSearch className="text-white" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">AI Search Warrant</h1>
-          <p className="text-gray-500 mt-1">Structure a fictional search warrant application draft for evaluation and authorized review.</p>
+          <h1 className="text-3xl font-bold text-gray-900 font-serif">Search Warrant Practice</h1>
+          <p className="text-gray-500 mt-1">Use a fictional scenario to draft a search warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
         </div>
       </div>
 

@@ -9,73 +9,79 @@ const faqs = [
     id: 1,
     question: 'What is KLYVOREK?',
     answer:
-      'KLYVOREK is an emerging AI-assisted documentation platform built for law enforcement. During its current evaluation phase, it demonstrates how structured, fictional case facts can be organized into incident-report narratives and search- and arrest-warrant application drafts. KLYVOREK assists with documentation; it does not replace investigation, professional judgment, supervision, prosecution, legal review, or judicial determination. Do not enter live CJI and active case information during the evaluation phase.',
+      'KLYVOREK is a self-paced law enforcement documentation training platform using fictional scenarios and AI assistance.',
   },
   {
     id: 2,
-    question: 'How does KLYVOREK help law enforcement personnel?',
+    question: 'What is the KLYVOREK Institute?',
     answer:
-      'KLYVOREK helps authorized users practice and evaluate structured documentation workflows. Users supply fictional or properly de-identified facts during evaluation, and KLYVOREK organizes that information into a clearer draft for review. It is not currently offered as a production system for submitting live case information into official records.',
+      "The KLYVOREK Institute is a separate educational resource that provides fictional scenarios and fact patterns designed for use with KLYVOREK's documentation training platform.",
   },
   {
     id: 3,
-    question: 'Can KLYVOREK invent or change facts in a report?',
+    question: 'Where do I get training scenarios?',
     answer:
-      'It should not, and users should never assume that any AI-generated draft is automatically accurate. KLYVOREK is designed to work from information supplied by the user, not to create facts, evidence, observations, statements, charges, or probable cause. Because AI systems can produce errors, every generated document must be carefully reviewed against the original supplied facts.',
+      'Visit the KLYVOREK Institute to select or download a training scenario, then use the scenario facts to complete the appropriate exercise on the KLYVOREK Officer Page.',
   },
   {
     id: 4,
-    question: 'Does the officer remain responsible for the final report?',
+    question: 'What training is required to use KLYVOREK?',
     answer:
-      'Yes. KLYVOREK produces a draft based on user-provided information. Authorized personnel must review the document, verify the facts, make necessary corrections, and determine whether any output is suitable for further use. KLYVOREK does not replace officer judgment, supervisory review, prosecutor review, judicial review, or agency policy. During the current evaluation stage, outputs are not for official operational filing.',
+      'KLYVOREK is designed to be straightforward and requires minimal technical training. Officers do not need to understand prompt engineering or become an AI expert. Agencies should still provide appropriate training regarding their own policies, authorized use, information security, legal requirements, and review procedures.',
   },
   {
     id: 5,
-    question: 'What training is required to use KLYVOREK?',
+    question: 'What can I practice?',
     answer:
-      'KLYVOREK is designed to be straightforward and require minimal technical training. A user does not need to understand prompt engineering or become an AI expert. Agencies should still provide appropriate training regarding their own policies, authorized use, information security, legal requirements, and review procedures. Completing KLYVOREK training does not authorize users to enter live CJI. Operational use requires separate agency authorization, security review, applicable CJIS approval, and documented deployment controls.',
+      'Incident reports, search warrant applications, and arrest warrant applications.',
   },
   {
     id: 6,
-    question: 'Is KLYVOREK CJIS compliant?',
+    question: 'Does KLYVOREK write the document for me?',
     answer:
-      'Not at this stage. KLYVOREK includes foundational safeguards such as role-based access, audit logging, secure authentication, and production HTTPS. It is currently intended for controlled evaluation using fictional or properly de-identified information, not live Criminal Justice Information (CJI). Operational deployment will require additional security controls, an independent assessment, documented compliance measures, and approval under the participating agency’s applicable state and federal CJIS requirements.',
+      'KLYVOREK formulates an initial draft from the facts you provide. You are responsible for reviewing, correcting, refining, and confirming that the document accurately reflects the training scenario.',
   },
   {
     id: 7,
-    question: 'How is information used during a KLYVOREK evaluation?',
+    question: 'Can I use KLYVOREK independently?',
     answer:
-      'During evaluation, users should submit only fictional or properly de-identified information—not live case data or CJI. KLYVOREK does not intentionally use submitted facts to train publicly available general-purpose AI models. Data handling still depends on configured inference and storage providers, so administrators should review those provider terms and retention controls.',
+      'Yes. KLYVOREK is designed for self-paced, self-directed practice.',
   },
   {
     id: 8,
-    question: 'How accurate are the generated legal documents?',
+    question: 'Can FTOs and instructors monitor training?',
     answer:
-      'Generated content is a draft for evaluation and review, not a legal determination or official record. Users must verify every fact, citation, required element, and signature. Outputs from the current evaluation stage are not authorized for operational filing, charging, or judicial submission.',
+      'Yes. Authorized FTOs and instructors can assign scenarios and monitor officer progress.',
   },
   {
     id: 9,
-    question: "Does KLYVOREK replace an officer's RMS or agency records system?",
+    question: 'Are KLYVOREK scenarios based on real cases?',
     answer:
-      "No. KLYVOREK is an AI-assisted documentation evaluation tool. It helps prepare and structure drafts for authorized review. The agency's approved records, case-management, warrant, and filing procedures remain controlling for any official use.",
+      "KLYVOREK's standard training library uses fictional scenarios created for documentation practice based on real events.",
   },
   {
     id: 10,
+    question: 'Can KLYVOREK be used for additional or remedial training?',
+    answer:
+      'Yes. KLYVOREK can provide targeted practice in specific documentation skills while the agency or instructor retains responsibility for the training process.',
+  },
+  {
+    id: 11,
+    question: 'Does KLYVOREK determine probable cause?',
+    answer:
+      'No. KLYVOREK provides documentation training and assistance. Authorized professionals make probable cause determinations.',
+  },
+  {
+    id: 12,
     question: 'What happens if a user hits their monthly document save limit?',
     answer:
       "When a plan's generation limit is reached, new generations pause until the monthly reset or a plan upgrade. Existing documents remain available according to the user's plan and account status.",
   },
   {
-    id: 11,
+    id: 13,
     question: 'Can an agency cancel its subscription, and what happens to its data?',
     answer:
-      'An agency should be able to cancel its KLYVOREK subscription according to the terms of its plan. After cancellation, account access ends according to the subscription terms. KLYVOREK handles retained or deleted account data according to its Privacy Policy and applicable data-retention requirements. Evaluation drafts are not official agency records unless the agency separately designates them as such.',
-  },
-  {
-    id: 12,
-    question: 'Can we integrate this with our existing RMS (Records Management System)?',
-    answer:
-      'KLYVOREK does not currently provide direct RMS integration. Agencies interested in future integration may contact us to discuss requirements and supported export formats after completion of applicable compliance and deployment reviews.',
+      'Officers and agencies can cancel their KLYVOREK subscription according to the terms of their plan. After cancellation, account access ends according to the subscription terms.',
   },
 ]
 
@@ -83,14 +89,14 @@ function FAQItem({ faq }) {
   const [open, setOpen] = useState(faq.id === 1)
 
   return (
-    <div className="border border-gray-200 rounded-2xl overflow-hidden">
+    <div className="border border-gray-200 rounded-2xl overflow-hidden bg-white shadow-sm">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors"
         aria-expanded={open}
         id={`faq-btn-${faq.id}`}
       >
-        <span className="font-semibold text-gray-900 pr-8">{faq.question}</span>
+        <span className="font-semibold text-gray-900 pr-8 text-base">{faq.question}</span>
         {open ? (
           <ChevronUp size={18} className="text-gray-500 shrink-0" />
         ) : (
@@ -98,8 +104,8 @@ function FAQItem({ faq }) {
         )}
       </button>
       {open && (
-        <div className="px-6 pb-5 bg-white">
-          <p className="text-gray-600 text-sm leading-relaxed">{faq.answer}</p>
+        <div className="px-6 pb-6 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100 bg-gray-50/40">
+          {faq.answer}
         </div>
       )}
     </div>
@@ -108,30 +114,30 @@ function FAQItem({ faq }) {
 
 export default function FAQ() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
 
-      <section className="pt-16 pb-8 bg-white text-center px-4">
+      <section className="py-16 text-center px-4 bg-white border-b border-gray-200">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">Frequently Asked Questions</h1>
-        <p className="text-gray-500 max-w-lg mx-auto">
-          Answers about evaluation use, officer responsibility, AI-assisted drafting, CJIS/CJI limits, security, billing, and agency review.
+        <p className="text-gray-500 max-w-xl mx-auto text-base">
+          Find answers regarding KLYVOREK documentation training, scenario practice, and platform capabilities.
         </p>
       </section>
 
-      <section className="py-10 bg-white flex-1">
-        <div className="w-full max-w-2xl mx-auto px-6 lg:px-10 xl:px-16 space-y-4">
+      <section className="py-16 flex-1">
+        <div className="max-w-4xl mx-auto px-6 space-y-4">
           {faqs.map((faq) => (
             <FAQItem key={faq.id} faq={faq} />
           ))}
         </div>
       </section>
 
-      <div className="text-center py-12 bg-white">
-        <p className="text-gray-500 mb-2">Have more questions about evaluation use or compliance?</p>
-        <Link to="/pricing" className="font-semibold text-gray-900 hover:text-blue-600 transition-colors">
-          View Evaluation Options →
+      <section className="py-12 bg-white border-t border-gray-200 text-center px-4">
+        <p className="text-gray-600 mb-2">Have a question that is not covered here?</p>
+        <Link to="/contact" className="font-semibold text-blue-600 hover:text-blue-700">
+          Contact our team at info@klyvorek.com
         </Link>
-      </div>
+      </section>
 
       <Footer />
     </div>

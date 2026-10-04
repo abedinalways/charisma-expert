@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Shield, Menu, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo01.png';
 
 const navLinks = [
   { label: 'Home', to: '/' },
+  { label: 'KLYVOREK Institute', to: '/institute' },
   { label: 'Pricing', to: '/pricing' },
   { label: 'Blog', to: '/blog' },
-
   { label: 'About', to: '/about' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' },

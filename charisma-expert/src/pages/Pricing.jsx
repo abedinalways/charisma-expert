@@ -8,6 +8,147 @@ import { createCheckout } from '../api/payments'
 import { formatLimit } from '../utils/format'
 import { useAuth } from '../contexts/AuthContext'
 
+function PricingHeader() {
+  return (
+    <section className="pt-16 pb-6 bg-white text-center px-4">
+      <h1 className="text-4xl font-bold text-gray-900 mb-3">Training Pricing</h1>
+      <p className="text-gray-500 max-w-2xl mx-auto text-base sm:text-lg">
+        Start with self-paced access to fictional training scenarios. Upgrade for additional scenarios, advanced practice modules, and expanded training features.
+      </p>
+    </section>
+  )
+}
+
+function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribingTo, onPlanClick }) {
+  return (
+    <div
+      className={`relative rounded-3xl border-2 p-10 xl:p-12 flex flex-col bg-white min-h-[600px] ${
+        isPopular ? 'border-navy-800 shadow-2xl xl:scale-105 z-10' : 'border-gray-200 shadow-sm z-0'
+      }`}
+    >
+      {isPopular && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+          <span className="bg-navy-800 text-white text-xs font-semibold px-4 py-1.5 rounded-full">
+            Most Popular
+          </span>
+        </div>
+      )}
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">{plan.display_name}</h2>
+        <p className="text-sm text-gray-500 leading-relaxed">
+          {isFree
+            ? 'Try KLYVOREK free for up to 3 document generations. No credit card required.'
+            : plan.description || 'Access essential documentation training tools with fictional scenarios.'}
+        </p>
+      </div>
+
+      <div className="mb-10">
+        <div className="flex items-baseline">
+          <span className="text-6xl font-extrabold text-gray-900 tracking-tight">
+            {isFree ? '$0' : `$${price}`}
+          </span>
+          {!isFree && (
+            <span className="text-gray-500 text-lg font-medium ml-1">
+              {billingPeriod === 'yearly' ? '/yr' : '/mo'}
+            </span>
+          )}
+        </div>
+        {!isFree && billingPeriod === 'yearly' && (
+          <p className="mt-2 text-xs font-semibold text-emerald-700">Two months free compared with monthly billing.</p>
+        )}
+      </div>
+
+      <ul className="space-y-4 mb-10 flex-1">
+        <li className="flex items-center gap-3">
+          <Check size={20} className="text-emerald-500 shrink-0" />
+          <span className="text-sm text-gray-700 font-medium">Incident Reports</span>
+        </li>
+        <li className="flex items-center gap-3">
+          <Check size={20} className="text-emerald-500 shrink-0" />
+          <span className="text-sm text-gray-700 font-medium">
+            {isFree ? '3 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
+          </span>
+        </li>
+        {isFree && (
+          <li className="flex items-center gap-3">
+            <Check size={20} className="text-emerald-500 shrink-0" />
+            <span className="text-sm text-gray-700 font-medium">No Credit Card</span>
+          </li>
+        )}
+        {(plan.can_search_warrant || plan.can_arrest_warrant) && !isFree && (
+          <li className="flex items-center gap-3">
+            <Check size={20} className="text-emerald-500 shrink-0" />
+            <span className="text-sm text-gray-700 font-medium">
+              {formatLimit(plan.warrant_document_limit)} Warrants / Month
+            </span>
+          </li>
+        )}
+        <li className="flex items-center gap-3">
+          {plan.can_search_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
+          <span className={`text-sm ${plan.can_search_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
+            Search Warrants
+          </span>
+        </li>
+        <li className="flex items-center gap-3">
+          {plan.can_arrest_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
+          <span className={`text-sm ${plan.can_arrest_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
+            Arrest Warrants
+          </span>
+        </li>
+        {(plan.can_export_pdf || plan.can_export_docx) && (
+          <li className="flex items-center gap-3">
+            <Check size={20} className="text-emerald-500 shrink-0" />
+            <span className="text-sm text-gray-700 font-medium">
+              {plan.can_export_docx ? 'PDF + Editable DOCX Export' : 'PDF Export'}
+            </span>
+          </li>
+        )}
+      </ul>
+
+      <button
+        onClick={() => onPlanClick(plan)}
+        disabled={subscribingTo === plan.id}
+        className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center ${
+          isPopular
+            ? 'bg-navy-800 text-white hover:bg-navy-700 disabled:opacity-70'
+            : 'border-2 border-gray-200 text-gray-700 hover:border-navy-800 hover:text-navy-800 disabled:opacity-70'
+        }`}
+      >
+        {subscribingTo === plan.id ? <Loader2 className="animate-spin" size={18} /> : isFree ? 'Start Free Training' : isPopular ? 'Select Plus Plan' : 'Select Plan'}
+      </button>
+    </div>
+  )
+}
+
+function PremiumNotificationSection() {
+  return (
+    <section className="py-12 bg-gray-50">
+      <div className="w-full px-6 lg:px-10 xl:px-20 2xl:px-32">
+        <div className="border border-gray-200 rounded-3xl p-8 xl:p-10 bg-white shadow-sm">
+          <p className="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-4">
+            <Lock size={15} className="text-yellow-500" />
+            System Notification Example
+          </p>
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-8 text-center">
+            <Lock size={36} className="text-yellow-500 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Premium Module Locked</h3>
+            <p className="text-sm text-gray-600 max-w-sm mx-auto mb-6">
+              Upgrade to a paid plan to continue training and unlock additional scenarios and advanced practice modules.
+            </p>
+            <Link
+              to="/signup"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors inline-block"
+            >
+              Create Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Pricing() {
   const [plans, setPlans] = useState([])
   const [loading, setLoading] = useState(true)
@@ -52,13 +193,7 @@ export default function Pricing() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-
-      <section className="pt-16 pb-6 bg-white text-center px-4">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Evaluation Pricing</h1>
-        <p className="text-gray-500 max-w-2xl mx-auto">
-          Start a no-card evaluation using fictional or properly de-identified sample data—not live CJI or official case filing. Review every AI-assisted draft. Operational deployment requires separate agency compliance approval.
-        </p>
-      </section>
+      <PricingHeader />
 
       <section className="py-16 bg-white">
         <div className="w-full px-6 lg:px-10 xl:px-20 2xl:px-32">
@@ -94,102 +229,16 @@ export default function Pricing() {
                   const price = billingPeriod === 'yearly' ? plan.price_yearly : plan.price_monthly
 
                   return (
-                    <div
+                    <PricingCard
                       key={plan.id}
-                      className={`relative rounded-3xl border-2 p-10 xl:p-12 flex flex-col bg-white min-h-[600px] ${
-                        isPopular ? 'border-navy-800 shadow-2xl xl:scale-105 z-10' : 'border-gray-200 shadow-sm z-0'
-                      }`}
-                    >
-                      {isPopular && (
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                          <span className="bg-navy-800 text-white text-xs font-semibold px-4 py-1.5 rounded-full">
-                            Most Popular
-                          </span>
-                        </div>
-                      )}
-
-                      <div className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">{plan.display_name}</h2>
-                        <p className="text-sm text-gray-500 leading-relaxed">
-                          {plan.description || 'Access essential documentation-evaluation tools with sample data.'}
-                        </p>
-                      </div>
-
-                      <div className="mb-10">
-                        <div className="flex items-baseline">
-                          <span className="text-6xl font-extrabold text-gray-900 tracking-tight">
-                            {isFree ? '$0' : `$${price}`}
-                          </span>
-                          {!isFree && (
-                            <span className="text-gray-500 text-lg font-medium ml-1">
-                              {billingPeriod === 'yearly' ? '/yr' : '/mo'}
-                            </span>
-                          )}
-                        </div>
-                        {!isFree && billingPeriod === 'yearly' && (
-                          <p className="mt-2 text-xs font-semibold text-emerald-700">Two months free compared with monthly billing.</p>
-                        )}
-                      </div>
-
-                      <ul className="space-y-4 mb-10 flex-1">
-                        <li className="flex items-center gap-3">
-                          <Check size={20} className="text-emerald-500 shrink-0" />
-                          <span className="text-sm text-gray-700 font-medium">AI Incident Reports</span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <Check size={20} className="text-emerald-500 shrink-0" />
-                          <span className="text-sm text-gray-700 font-medium">
-                            {isFree ? '10 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
-                          </span>
-                        </li>
-                        {isFree && (
-                          <li className="flex items-center gap-3">
-                            <Check size={20} className="text-emerald-500 shrink-0" />
-                            <span className="text-sm text-gray-700 font-medium">14-Day Evaluation - No Credit Card</span>
-                          </li>
-                        )}
-                        {(plan.can_search_warrant || plan.can_arrest_warrant) && !isFree && (
-                          <li className="flex items-center gap-3">
-                            <Check size={20} className="text-emerald-500 shrink-0" />
-                            <span className="text-sm text-gray-700 font-medium">
-                              {formatLimit(plan.warrant_document_limit)} Warrants / Month
-                            </span>
-                          </li>
-                        )}
-                        <li className="flex items-center gap-3">
-                          {plan.can_search_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
-                          <span className={`text-sm ${plan.can_search_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
-                            AI Search Warrants
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          {plan.can_arrest_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
-                          <span className={`text-sm ${plan.can_arrest_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
-                            AI Arrest Warrants
-                          </span>
-                        </li>
-                        {(plan.can_export_pdf || plan.can_export_docx) && (
-                          <li className="flex items-center gap-3">
-                            <Check size={20} className="text-emerald-500 shrink-0" />
-                            <span className="text-sm text-gray-700 font-medium">
-                              {plan.can_export_docx ? 'PDF + Editable DOCX Export' : 'PDF Export'}
-                            </span>
-                          </li>
-                        )}
-                      </ul>
-
-                      <button
-                        onClick={() => handlePlanClick(plan)}
-                        disabled={subscribingTo === plan.id}
-                        className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center ${
-                          isPopular
-                            ? 'bg-navy-800 text-white hover:bg-navy-700 disabled:opacity-70'
-                            : 'border-2 border-gray-200 text-gray-700 hover:border-navy-800 hover:text-navy-800 disabled:opacity-70'
-                        }`}
-                      >
-                        {subscribingTo === plan.id ? <Loader2 className="animate-spin" size={18} /> : isFree ? 'Join the Evaluation Program' : isPopular ? 'Select Plus Plan' : 'Select Plan'}
-                      </button>
-                    </div>
+                      plan={plan}
+                      isPopular={isPopular}
+                      isFree={isFree}
+                      price={price}
+                      billingPeriod={billingPeriod}
+                      subscribingTo={subscribingTo}
+                      onPlanClick={handlePlanClick}
+                    />
                   )
                 })}
               </div>
@@ -198,32 +247,10 @@ export default function Pricing() {
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50">
-        <div className="w-full px-6 lg:px-10 xl:px-20 2xl:px-32">
-          <div className="border border-gray-200 rounded-3xl p-8 xl:p-10 bg-white shadow-sm">
-            <p className="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-4">
-              <Lock size={15} className="text-yellow-500" />
-              System Notification Example
-            </p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-8 text-center">
-              <Lock size={36} className="text-yellow-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Premium Module Locked</h3>
-              <p className="text-sm text-gray-600 max-w-sm mx-auto mb-6">
-                Continue with a paid plan when your evaluation ends or your generation limit is reached. Paid plans remain subject to the same synthetic/de-identified evaluation rules until CJIS-ready operational deployment is approved.
-              </p>
-              <Link
-                to="/signup"
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors inline-block"
-              >
-                Create Account
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PremiumNotificationSection />
 
       <section className="py-10 bg-white text-center">
-        <p className="text-gray-500 mb-2">Have questions about evaluation use, CJIS readiness, or agency deployment review?</p>
+        <p className="text-gray-500 mb-2">Have questions about training, scenarios, or instructor access?</p>
         <Link to="/faq" className="font-semibold text-gray-900 hover:text-blue-600 transition-colors">
           Read our Frequently Asked Questions
         </Link>

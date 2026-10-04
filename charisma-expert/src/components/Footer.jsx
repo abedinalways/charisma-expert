@@ -35,7 +35,7 @@ export default function Footer() {
               <span className="text-xl font-bold text-white tracking-[0.16em]">KLYVOREK</span>
             </Link>
             <p className="text-sm text-gray-300 leading-relaxed">
-              KLYVOREK is an emerging AI-assisted law-enforcement documentation platform currently being evaluated through controlled, fictional scenarios involving incident reports and structured warrant application drafts.
+              KLYVOREK is a self-paced law enforcement documentation training platform for practicing incident reports, search warrants, and arrest warrants through realistic fictional scenarios and AI assistance.
             </p>
           </div>
 

@@ -69,7 +69,9 @@ class Command(BaseCommand):
         sub, _ = Subscription.objects.get_or_create(user=user, defaults={'plan': pro})
         sub.plan = pro
         sub.status = 'active'
+        sub.stripe_subscription_id = 'sub_smoke_test'
         sub.documents_generated_this_month = 0
+        sub.warrants_generated_this_month = 0
         sub.save()
         self.stdout.write(f'{BOLD}Provisioned test officer {EMAIL} on plan "{pro.name}".{RESET}\n')
 
@@ -111,12 +113,27 @@ class Command(BaseCommand):
         ids = {}
         for dt, fd in payloads.items():
             r = requests.post(f'{base}/api/documents/generate/', headers=headers,
-                              json={'doc_type': dt, 'narrative_style': 'third_person', 'form_data': fd},
-                              timeout=300)  # live model (ollama) is slower than mock
-            ok = r.status_code == 201 and r.json().get('status') == 'completed'
-            self._ok(f'Generate {dt}', ok, f'HTTP {r.status_code}')
+                              json={
+                                  'doc_type': dt,
+                                  'narrative_style': 'third_person',
+                                  'form_data': fd,
+                                  'source_facts_acknowledged': True,
+                              },
+                              timeout=300)
+            doc_id = r.json().get('id') if r.ok else None
+            doc_status = r.json().get('status')
+            if doc_id and doc_status != 'completed':
+                import time
+                for _ in range(15):
+                    time.sleep(0.5)
+                    poll_r = requests.get(f'{base}/api/documents/{doc_id}/', headers=headers, timeout=10)
+                    if poll_r.ok and poll_r.json().get('status') == 'completed':
+                        doc_status = 'completed'
+                        break
+            ok = r.status_code in (201, 202) and doc_status == 'completed'
+            self._ok(f'Generate {dt}', ok, f'HTTP {r.status_code} ({doc_status})')
             if ok:
-                ids[dt] = r.json()['id']
+                ids[dt] = doc_id
         return ids
 
     def _check_list(self, base, headers):
@@ -131,10 +148,10 @@ class Command(BaseCommand):
             self._ok('Export DOCX', False, 'no document to export')
             return
         rp = requests.post(f'{base}/api/documents/{doc_id}/export/', headers=headers,
-                           json={'format': 'pdf'}, timeout=60)
+                           json={'format': 'pdf', 'review_acknowledged': True}, timeout=60)
         self._ok('Export PDF', rp.ok and rp.content[:4] == b'%PDF', f'{len(rp.content)} bytes')
         rd = requests.post(f'{base}/api/documents/{doc_id}/export/', headers=headers,
-                           json={'format': 'docx'}, timeout=60)
+                           json={'format': 'docx', 'review_acknowledged': True}, timeout=60)
         self._ok('Export DOCX', rd.ok and rd.content[:2] == b'PK', f'{len(rd.content)} bytes')
 
     def _check_blog_and_plans(self, base):

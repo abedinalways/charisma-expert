@@ -44,7 +44,7 @@ class ContactView(APIView):
             subject=f'KLYVOREK contact form: {full_name}',
             body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=['klyvorek@gmail.com'],
+            to=['info@klyvorek.com'],
             reply_to=[email],
         )
         email_msg.send(fail_silently=False)

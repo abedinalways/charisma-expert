@@ -292,8 +292,8 @@ export default function CreateIncidentReport() {
            <Clock className="text-[#111625] relative" size={12} fill="white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">AI Incident Report Generator</h1>
-          <p className="text-gray-500 mt-1">Enter fictional or properly de-identified sample facts below. The AI will structure them into a reviewable incident narrative draft for evaluation.</p>
+          <h1 className="text-3xl font-bold text-gray-900 font-serif">Incident Report Practice</h1>
+          <p className="text-gray-500 mt-1">Use a fictional scenario to write an incident narrative, then receive AI assistance to help improve clarity, structure, and completeness.</p>
         </div>
       </div>
 

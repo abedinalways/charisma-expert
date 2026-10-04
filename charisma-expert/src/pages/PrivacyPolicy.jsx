@@ -13,7 +13,7 @@ const sections = [
   ['9. Ownership and Control', <p>Between KLYVOREK and a subscribing agency, the agency retains its rights in submitted information. KLYVOREK receives only the limited rights reasonably necessary to provide the contracted evaluation services.</p>],
   ['10. Cookies and Analytics', <p>The public website may use cookies or similar technologies for essential functionality, security, analytics, and performance. Sensitive case information is not intentionally used for advertising.</p>],
   ['11. Privacy Requests and Children', <p>Requests about agency-controlled records should generally be directed to the relevant agency. KLYVOREK is a professional law enforcement technology evaluation service and is not intended for children.</p>],
-  ['12. Changes and Contact', <p>Policy Updates: Material changes will be reflected in this policy. We will provide additional notice to users when appropriate. Questions about this policy or suspected unauthorized access may be sent to <a className="text-blue-600 underline" href="mailto:privacy@klyvorek.com">privacy@klyvorek.com</a> or <a className="text-blue-600 underline" href="mailto:security@klyvorek.com">security@klyvorek.com</a>.</p>],
+  ['12. Changes and Contact', <p>Policy Updates: Material changes will be reflected in this policy. We will provide additional notice to users when appropriate. Questions about this policy or suspected unauthorized access may be sent to <a className="text-blue-600 underline" href="mailto:info@klyvorek.com">info@klyvorek.com</a>.</p>],
 ]
 
 export default function PrivacyPolicy() {

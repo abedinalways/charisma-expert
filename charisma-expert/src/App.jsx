@@ -17,6 +17,7 @@ const BillingSuccess = lazy(() => import('./pages/BillingSuccess'))
 const BillingCancel = lazy(() => import('./pages/BillingCancel'))
 
 const About = lazy(() => import('./pages/About'))
+const Institute = lazy(() => import('./pages/Institute'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const Contact = lazy(() => import('./pages/Contact'))
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="/billing/cancel" element={<BillingCancel />} />
 
           <Route path="/about" element={<About />} />
+          <Route path="/institute" element={<Institute />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

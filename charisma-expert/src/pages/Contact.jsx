@@ -8,7 +8,7 @@ const contactInfo = [
   {
     icon: <Mail size={20} />,
     title: 'Email Us',
-    lines: ['klyvorek@gmail.com'],
+    lines: ['info@klyvorek.com'],
   },
   {
     icon: <Phone size={20} />,
@@ -46,7 +46,7 @@ export default function Contact() {
       await sendContactMessage(form)
       setSubmitted(true)
     } catch (err) {
-      setError(err.response?.data?.error?.detail || 'Unable to send your message right now. Please email klyvorek@gmail.com directly.')
+      setError(err.response?.data?.error?.detail || 'Unable to send your message right now. Please email info@klyvorek.com directly.')
     } finally {
       setSubmitting(false)
     }

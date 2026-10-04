@@ -104,8 +104,8 @@ export default function CreateArrestWarrant() {
            <UserPlus className="text-white" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">AI Arrest Warrant</h1>
-          <p className="text-gray-500 mt-1">Create fictional arrest warrant application drafts for controlled evaluation.</p>
+          <h1 className="text-3xl font-bold text-gray-900 font-serif">Arrest Warrant Practice</h1>
+          <p className="text-gray-500 mt-1">Use a fictional scenario to draft an arrest warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
         </div>
       </div>
 
