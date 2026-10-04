@@ -6,12 +6,12 @@ import logoImg from '../assets/logo01.png';
 
 const navLinks = [
   { label: 'Home', to: '/' },
-  { label: 'KLYVOREK Institute', to: '/institute' },
   { label: 'Pricing', to: '/pricing' },
-  { label: 'Blog', to: '/blog' },
   { label: 'About', to: '/about' },
   { label: 'FAQ', to: '/faq' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
+  { label: 'KLYVOREK Institute', to: '/institute' },
 ]
 
 export default function Navbar() {
@@ -81,13 +81,13 @@ export default function Navbar() {
                   className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-navy-800 transition-colors"
                 >
                   <Shield size={15} strokeWidth={1.5} />
-                  Evaluator Login
+                  Officer Login
                 </Link>
                 <Link
                   to="/signup"
                   className="bg-navy-800 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-navy-700 transition-colors"
                 >
-                  Explore the Fictional Demo
+                  Start Free Evaluation
                 </Link>
               </>
             )}
@@ -124,7 +124,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Show Evaluator Login here on very small screens where it's hidden in the top bar */}
+            {/* Show Officer Login here on very small screens where it's hidden in the top bar */}
             {!user && (
               <>
                 <hr className="border-gray-100 my-1" />
@@ -134,7 +134,7 @@ export default function Navbar() {
                   className="sm:hidden flex items-center gap-2 text-gray-700 hover:text-navy-800 font-medium text-lg"
                 >
                   <Shield size={18} strokeWidth={1.5} />
-                  Evaluator Login
+                  Officer Login
                 </Link>
               </>
             )}
