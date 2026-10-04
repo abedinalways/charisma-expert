@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import { Shield } from 'lucide-react'
-import logoImg from '../assets/logo.png'
+import logoImg from '../assets/logo01.png'
 
 const footerLinks = {
   Platform: [
     { label: 'Pricing & Plans', to: '/pricing' },
-    { label: 'Evaluator Dashboard', to: '/login' },
+    { label: 'Officer Dashboard', to: '/login' },
   ],
   Resources: [
+    { label: 'KLYVOREK Institute', to: '/institute' },
     { label: 'Blog & News', to: '/blog' },
-
     { label: 'FAQ', to: '/faq' },
   ],
   Company: [

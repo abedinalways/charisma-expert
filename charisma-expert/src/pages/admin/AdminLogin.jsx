@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, ShieldAlert, Loader2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo01.png';
 
 export default function AdminLogin() {
   const navigate = useNavigate();

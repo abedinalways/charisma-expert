@@ -1,6 +1,5 @@
 import { AlertTriangle } from 'lucide-react'
 
-/** Short warning shown above report/warrant entry forms (client feedback §20). */
 export default function EvaluationDataNotice({ className = '' }) {
   return (
     <div
@@ -9,8 +8,8 @@ export default function EvaluationDataNotice({ className = '' }) {
     >
       <AlertTriangle size={18} className="mt-0.5 shrink-0 text-amber-600" />
       <p>
-        <span className="font-semibold">Evaluation environment</span>
-        —fictional or properly de-identified information only.
+        <span className="font-semibold">Training environment</span>
+        —use fictional scenarios or properly de-identified information.
       </p>
     </div>
   )

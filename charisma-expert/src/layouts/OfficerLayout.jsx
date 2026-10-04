@@ -14,9 +14,10 @@ import {
   ChevronDown,
   ChevronUp,
   Menu,
-  X
+  X,
+  GraduationCap
 } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo01.png';
 
 export default function OfficerLayout() {
   const { user, logout } = useAuth();
@@ -169,6 +170,18 @@ export default function OfficerLayout() {
               >
                 <CreditCard size={18} className="mr-3" />
                 Manage Billing
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/institute" 
+                className={`flex items-center px-6 py-3 text-sm transition-colors ${
+                  isActive('/institute') ? 'bg-blue-600 text-white' : 'hover:bg-gray-800 hover:text-white'
+                }`}
+              >
+                <GraduationCap size={18} className="mr-3 text-amber-400" />
+                KLYVOREK Institute
               </Link>
             </li>
           </ul>

@@ -16,7 +16,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo01.png';
 
 const AdminLayout = () => {
   const location = useLocation();
