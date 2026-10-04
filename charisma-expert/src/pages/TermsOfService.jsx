@@ -2,20 +2,20 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const terms = [
-  ['1. Purpose and Evaluation Scope', 'KLYVOREK is an AI-assisted documentation tool offered at this stage for controlled evaluation by authorized law enforcement professionals and agency reviewers. Available features may include incident-report drafts, investigative narratives, and warrant-application drafts generated from user-provided sample information. KLYVOREK is not a substitute for professional judgment, supervision, prosecution, legal counsel, or judicial determination, and it is not currently a CJIS-compliant production system for live Criminal Justice Information (CJI) or official case filing.'],
-  ['2. Synthetic and De-Identified Data Only', 'During the current evaluation stage, users must not submit live CJI, real case files, real suspect or victim identifiers from active matters, or other restricted operational data. Users must use fictional scenarios or properly de-identified information only. Outputs are evaluation drafts and are not authorized for operational filing, charging, warrant swearing, or judicial submission.'],
-  ['3. Mandatory Human Verification', 'An authorized professional must independently review every AI-assisted document before any further use. Users remain responsible for facts, names, dates, locations, quotations, evidence, citations, offense elements, probable cause, scope, particularity, nexus, attachments, and legal sufficiency. Evaluation drafts must not be treated as official records.'],
+  ['1. Purpose and Training Scope', 'KLYVOREK is an AI-assisted documentation training tool offered for self-paced practice by authorized law enforcement professionals and training personnel. Available features include practice incident-report drafts, investigative narratives, and warrant-application drafts generated from user-provided scenario information. KLYVOREK is an educational training platform and not a substitute for professional judgment, supervision, prosecution, legal counsel, or judicial determination, and it is not a CJIS-compliant system for live Criminal Justice Information (CJI) or official case filing.'],
+  ['2. Synthetic and De-Identified Scenario Data Only', 'In this training environment, users must not submit live CJI, real case files, real suspect or victim identifiers from active matters, or other restricted operational data. Users must use fictional training scenarios or properly de-identified information only. Outputs are educational training drafts and are not authorized for operational filing, charging, warrant swearing, or judicial submission.'],
+  ['3. Mandatory Human Verification', 'An authorized professional must independently review every AI-assisted document before any further use. Users remain responsible for facts, names, dates, locations, quotations, evidence, citations, offense elements, probable cause, scope, particularity, nexus, attachments, and legal sufficiency. Training drafts must not be treated as official operational records.'],
   ['4. No Fabrication', 'Users must not use KLYVOREK to fabricate evidence, probable cause, witness statements, confessions, investigative findings, observations, allegations, attribution, or other material facts.'],
-  ['5. Warrant Applications', 'KLYVOREK may organize user-provided sample information into search or arrest warrant application drafts for evaluation. It does not determine probable cause, issue warrants, or guarantee compliance with constitutional, statutory, procedural, prosecutorial, local, or judicial requirements.'],
-  ['6. No Legal Advice', 'KLYVOREK does not provide legal advice or establish an attorney-client relationship. Explanations, flags, citations, and suggested language are informational and assistive only.'],
+  ['5. Warrant Applications', 'KLYVOREK organizes user-provided scenario facts into search or arrest warrant application practice drafts. It does not determine probable cause, issue warrants, or guarantee compliance with constitutional, statutory, procedural, prosecutorial, local, or judicial requirements.'],
+  ['6. No Legal Advice', 'KLYVOREK does not provide legal advice or establish an attorney-client relationship. Explanations, flags, citations, and suggested language are informational and educational coaching aids only.'],
   ['7. No Autonomous Enforcement Decisions', 'KLYVOREK must not be the sole basis for arrest, detention, search, seizure, use of force, charging, probable cause, reasonable suspicion, targeting, threat determinations, guilt, sentencing, discipline, or decisions affecting constitutional rights.'],
-  ['8. Authorized Users and Agency Policy', 'Users must provide accurate registration information, protect credentials, and ensure that their agency authorizes evaluation use consistent with law, policy, records, privacy, evidence, discovery, procurement, and security requirements—including a prohibition on entering live CJI into the evaluation environment.'],
-  ['9. CJIS, CJI and Evaluation Restrictions', 'KLYVOREK is not currently represented as CJIS compliant or certified. Users must not enter live CJI, CHRI, NCIC information, active case information, personally identifiable case information, or unredacted police records into the evaluation environment. Future operational use will require additional controls, a documented assessment, applicable contracts and Security Addenda, agency authorization, and compliance with the participating agency’s state and federal CJIS requirements.'],
-  ['10. AI Limitations', 'Generative AI may produce incorrect, incomplete, unsupported, outdated, or misleading content. Output must be treated as a draft requiring professional verification and is not suitable for official operational use during the evaluation stage.'],
-  ['11. Prohibited Uses', 'The service may not be used to process live CJI during evaluation, falsify records, misrepresent AI text as an independently observed fact, access information without authorization, violate rights, circumvent controls, conduct unlawful surveillance, harass or discriminate unlawfully, facilitate crime, upload malware, or attempt unauthorized access.'],
-  ['12. Ownership', 'KLYVOREK and its licensors retain ownership of the platform and proprietary technology. Customers retain their rights in submitted information, subject to the limited rights needed to provide the service.'],
+  ['8. Authorized Users and Training Policy', 'Users must provide accurate registration information, protect credentials, and ensure that their use is consistent with applicable training and agency requirements—including the strict prohibition on entering live CJI into the training platform.'],
+  ['9. CJIS and CJI Restrictions', 'KLYVOREK is a training platform and is not currently represented as CJIS compliant or certified. Users must not enter live CJI, CHRI, NCIC information, active case information, personally identifiable case information, or unredacted operational police records into the platform.'],
+  ['10. AI Limitations', 'Generative AI may produce incorrect, incomplete, unsupported, outdated, or misleading content. Output must be treated as a practice draft requiring human verification and is not suitable for official operational use.'],
+  ['11. Prohibited Uses', 'The service may not be used to process live CJI, falsify records, misrepresent AI text as an independently observed fact, access information without authorization, violate rights, circumvent controls, conduct unlawful surveillance, harass or discriminate unlawfully, facilitate crime, upload malware, or attempt unauthorized access.'],
+  ['12. Ownership', 'KLYVOREK and its licensors retain ownership of the platform and proprietary technology. Customers retain their rights in submitted scenario information, subject to the limited rights needed to provide the service.'],
   ['13. Availability and Changes', 'Features may be updated, suspended, or discontinued. KLYVOREK does not guarantee uninterrupted or error-free service.'],
-  ['14. Subscription and Payment', 'Paid subscriptions are billed under the terms shown at purchase or in an agency agreement. Unless otherwise stated in writing, fees are non-refundable except where required by law. Paid access during the evaluation stage remains subject to the synthetic/de-identified data restrictions in these Terms.'],
+  ['14. Subscription and Payment', 'Paid subscriptions are billed under the terms shown at purchase or in an enterprise agreement. Unless otherwise stated in writing, fees are non-refundable except where required by law. Paid access remains subject to the synthetic/de-identified data restrictions in these Terms.'],
   ['15. Disclaimer', 'To the maximum extent permitted by law, KLYVOREK is provided as is and as available. KLYVOREK does not warrant that AI content will be error-free, complete, legally sufficient, admissible, accurate, CJIS-compliant, or approved by any authority.'],
   ['16. Liability and Government Customers', 'To the maximum extent permitted by law, KLYVOREK is not liable for indirect, special, consequential, exemplary, or punitive damages arising from use of the service. Government-specific obligations, sovereign immunity, indemnification, public records, procurement, security, and governing-law terms are controlled by applicable law and separately executed agreements.'],
   ['17. Suspension', 'Access may be suspended to protect security, investigate unauthorized activity, prevent unlawful use (including prohibited live-CJI submission), address material violations, or comply with law.'],
@@ -24,5 +24,34 @@ const terms = [
 ]
 
 export default function TermsOfService() {
-  return <div className="min-h-screen flex flex-col"><Navbar /><main className="flex-1 bg-gray-50 py-16"><article className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm px-6 sm:px-10 py-10"><p className="text-blue-600 text-sm font-semibold uppercase tracking-wider">Legal</p><h1 className="text-4xl font-bold text-gray-900 mt-2">KLYVOREK Terms of Service</h1><p className="text-sm text-gray-500 mt-3">Effective August 11, 2026 · Updated for controlled evaluation stage</p><p className="mt-8 text-gray-600 leading-relaxed">By accessing KLYVOREK, the user and, where applicable, the user&apos;s agency agree to these Terms, including the requirement to use fictional or properly de-identified information only during the current evaluation stage.</p><div className="mt-10 space-y-8">{terms.map(([title, text]) => <section key={title}><h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2><p className="text-gray-600 leading-relaxed">{text}</p></section>)}</div><div className="mt-10 pt-6 border-t text-sm text-gray-500">KLYVOREK · American Academy of Advanced Thinking, LLC · Metro Atlanta, Georgia 30106 · <a className="text-blue-600 underline" href="mailto:info@klyvorek.com">info@klyvorek.com</a></div></article></main><Footer /></div>
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1 bg-gray-50 py-16">
+        <article className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm px-6 sm:px-10 py-10">
+          <p className="text-blue-600 text-sm font-semibold uppercase tracking-wider">Legal</p>
+          <h1 className="text-4xl font-bold text-gray-900 mt-2">KLYVOREK Terms of Service</h1>
+          <p className="text-sm text-gray-500 mt-3">Effective August 11, 2026 · Updated for documentation training platform</p>
+          <p className="mt-8 text-gray-600 leading-relaxed">
+            By accessing KLYVOREK, the user agrees to these Terms, including the requirement to use fictional scenarios or properly de-identified information only within this training platform.
+          </p>
+          <div className="mt-10 space-y-8">
+            {terms.map(([title, text]) => (
+              <section key={title}>
+                <h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2>
+                <p className="text-gray-600 leading-relaxed">{text}</p>
+              </section>
+            ))}
+          </div>
+          <div className="mt-10 pt-6 border-t text-sm text-gray-500">
+            KLYVOREK · American Academy of Advanced Thinking, LLC · Metro Atlanta, Georgia 30106 ·{' '}
+            <a className="text-blue-600 underline" href="mailto:info@klyvorek.com">
+              info@klyvorek.com
+            </a>
+          </div>
+        </article>
+      </main>
+      <Footer />
+    </div>
+  )
 }
