@@ -1,0 +1,335 @@
+"""
+Regression tests for the requirements-driven changes to document generation:
+- WarrantTemplate resolution order (agency override -> jurisdiction profile ->
+  seeded global default -> built-in Python fallback).
+- Jurisdiction-aware PDF export dispatch (federal -> official AO forms,
+  state/municipal -> the custom agency-aware builder).
+- _officer_profile() actually carrying the full Agency field set through.
+- Incomplete officer profiles block incident-report export instead of
+  silently rendering another department's identity.
+"""
+from unittest.mock import patch
+
+import shortuuid
+from django.contrib.auth import get_user_model
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory, force_authenticate
+
+from accounts.models import Agency, JurisdictionProfile
+from documents.exporters.pdf import render_pdf
+from documents.templates_engine import get_template_text, render_template
+from documents.models import GeneratedDocument, WarrantTemplate
+from documents.views import ExportDocumentView, _officer_profile
+from documents.generation import _default_review_status
+
+User = get_user_model()
+
+
+class NonBlockingReviewWorkflowTests(TestCase):
+    def test_agency_review_preferences_do_not_gate_new_documents(self):
+        agency = Agency.objects.create(
+            name='Optional Review PD', requires_supervisor_review=True,
+            requires_prosecutor_review=True,
+        )
+        for doc_type in ('incident_report', 'search_warrant', 'arrest_warrant'):
+            self.assertEqual(
+                _default_review_status(doc_type, agency),
+                GeneratedDocument.ReviewStatus.NOT_REQUIRED,
+            )
+
+
+class WarrantTemplateResolutionTests(TestCase):
+    def setUp(self):
+        self.profile = JurisdictionProfile.objects.create(
+            name='Georgia — State', jurisdiction_type='state', state='Georgia',
+        )
+        self.agency = Agency.objects.create(
+            name='Test PD', jurisdiction_type='state', jurisdiction_profile=self.profile,
+        )
+
+    def test_falls_back_to_seeded_global_default(self):
+        text = get_template_text(self.agency, 'search_warrant', 'affidavit_intro')
+        self.assertIn('{affiant_name}', text)
+        self.assertTrue(len(text) > 0)
+
+    def test_falls_back_to_python_default_with_zero_db_rows(self):
+        WarrantTemplate.objects.all().delete()
+        text = get_template_text(self.agency, 'search_warrant', 'nexus_closing')
+        self.assertIn('{nexus_to_place}', text)
+
+    def test_jurisdiction_profile_override_takes_precedence_over_global(self):
+        WarrantTemplate.objects.create(
+            jurisdiction_profile=self.profile, doc_type='search_warrant',
+            section_key='affidavit_intro', template_text='PROFILE TEXT {affiant_name}',
+        )
+        text = get_template_text(self.agency, 'search_warrant', 'affidavit_intro')
+        self.assertEqual(text, 'PROFILE TEXT {affiant_name}')
+
+    def test_agency_override_takes_precedence_over_profile(self):
+        WarrantTemplate.objects.create(
+            jurisdiction_profile=self.profile, doc_type='search_warrant',
+            section_key='affidavit_intro', template_text='PROFILE TEXT',
+        )
+        WarrantTemplate.objects.create(
+            agency=self.agency, doc_type='search_warrant',
+            section_key='affidavit_intro', template_text='AGENCY TEXT',
+        )
+        text = get_template_text(self.agency, 'search_warrant', 'affidavit_intro')
+        self.assertEqual(text, 'AGENCY TEXT')
+
+    def test_render_template_never_raises_on_malformed_placeholder(self):
+        # An admin's typo in a custom template must not break generation.
+        out = render_template('Hello {missing_key} and {unclosed', {'affiant_name': 'X'})
+        self.assertIsInstance(out, str)
+
+
+class OfficerProfileAgencyMergeTests(TestCase):
+    def test_full_agency_field_set_flows_through(self):
+        agency = Agency.objects.create(
+            name='Full PD', jurisdiction_type='federal', state='CA', county='LA',
+            city='Los Angeles', court_name='US District Court', judicial_district='Central',
+            division='Criminal', court_caption='CENTRAL DISTRICT OF CALIFORNIA',
+            judge_title='Magistrate Judge', prosecuting_authority='US Attorney',
+            case_number_format='{year}-CR-{seq}', ori='CA1234500',
+            default_legal_citations='18 U.S.C. 1030',
+        )
+        user = User.objects.create(email='o@example.com', agency=agency, rank='Detective')
+
+        profile = _officer_profile(user)
+
+        self.assertEqual(profile['agency_jurisdiction_type'], 'federal')
+        self.assertEqual(profile['agency_judicial_district'], 'Central')
+        self.assertEqual(profile['agency_division'], 'Criminal')
+        self.assertEqual(profile['agency_judge_title'], 'Magistrate Judge')
+        self.assertEqual(profile['agency_prosecuting_authority'], 'US Attorney')
+        self.assertEqual(profile['agency_case_number_format'], '{year}-CR-{seq}')
+        self.assertEqual(profile['agency_default_legal_citations'], '18 U.S.C. 1030')
+
+    def test_agency_citations_fall_back_to_jurisdiction_profile(self):
+        profile = JurisdictionProfile.objects.create(
+            name='CA State', jurisdiction_type='state', state='CA',
+            default_legal_citations='CA Penal Code 187',
+        )
+        agency = Agency.objects.create(
+            name='No Citations PD', jurisdiction_type='state', jurisdiction_profile=profile,
+        )
+        user = User.objects.create(email='o2@example.com', agency=agency)
+
+        prof = _officer_profile(user)
+        self.assertEqual(prof['agency_default_legal_citations'], 'CA Penal Code 187')
+
+
+class JurisdictionExportDispatchTests(TestCase):
+    """Federal agencies fill the official AO forms; state/municipal agencies get
+    the same AO template layout drawn with their own jurisdiction header."""
+
+    def _officer(self, jurisdiction_type):
+        return {
+            'full_name': 'Jane Doe', 'rank': 'Officer', 'badge_number': '123',
+            'agency_name': 'Test Agency', 'agency_jurisdiction_type': jurisdiction_type,
+            'agency_state': 'GA', 'agency_county': 'Cobb',
+            'agency_court_caption': 'SUPERIOR COURT OF COBB COUNTY',
+        }
+
+    @patch('documents.exporters.ao_forms.fill_search_warrant')
+    def test_federal_search_warrant_uses_ao_forms(self, mock_fill):
+        mock_fill.return_value = b'%PDF-FAKE'
+        form_data = {'court': {}, 'place_to_search': {'description': 'a house'}, 'offenses': []}
+        render_pdf('search_warrant', form_data, 'narrative', self._officer('federal'))
+        mock_fill.assert_called_once()
+
+    @patch('documents.exporters.ao_forms.fill_search_warrant')
+    def test_state_search_warrant_uses_dynamic_header_builder(self, mock_fill):
+        form_data = {'court': {}, 'place_to_search': {'description': 'a house'}, 'offenses': []}
+        content = render_pdf('search_warrant', form_data, 'narrative', self._officer('state'))
+        mock_fill.assert_not_called()
+        self.assertTrue(content[:4] == b'%PDF')
+
+    @patch('documents.exporters.ao_forms.fill_arrest_warrant')
+    def test_state_arrest_warrant_uses_dynamic_header_builder(self, mock_fill):
+        form_data = {'court': {}, 'defendant': {'full_name': 'John Roe'}}
+        content = render_pdf('arrest_warrant', form_data, 'narrative', self._officer('state'))
+        mock_fill.assert_not_called()
+        self.assertTrue(content[:4] == b'%PDF')
+
+    @patch('documents.exporters.ao_forms.fill_search_warrant')
+    def test_jurisdiction_override_beats_agency_default(self, mock_fill):
+        mock_fill.return_value = b'%PDF-FAKE'
+        form_data = {
+            'court': {'jurisdiction_type_override': 'federal'},
+            'place_to_search': {'description': 'a house'}, 'offenses': [],
+        }
+        render_pdf('search_warrant', form_data, 'narrative', self._officer('state'))
+        mock_fill.assert_called_once()
+
+
+class CaseNumberFormatTests(TestCase):
+    """Agency.case_number_format (Agency Configuration Wizard) drives
+    auto-generated case numbers."""
+
+    def _user_with_format(self, fmt):
+        agency = Agency.objects.create(name=f'PD {fmt or "none"}', case_number_format=fmt)
+        return User.objects.create(email=f'cn-{shortuuid.uuid()[:8]}@example.com', agency=agency)
+
+    def test_format_tokens_are_expanded(self):
+        from django.utils import timezone
+
+        from documents.views import _auto_case_number
+        user = self._user_with_format('SW-YYYY-#####')
+        number = _auto_case_number(user)
+        self.assertRegex(number, rf'^SW-{timezone.now().year}-\d{{5}}$')
+
+    def test_no_agency_falls_back_to_le_prefix(self):
+        from documents.views import _auto_case_number
+        user = User.objects.create(email='cn-noagency@example.com')
+        self.assertTrue(_auto_case_number(user).startswith('LE-'))
+
+
+class IncidentReportExportValidationTests(TestCase):
+    """
+    Client-facing fix: exporting an incident report with a blank department
+    name / ORI / badge number used to silently render a real, unrelated
+    department's identity onto the document. It must now be blocked instead.
+    """
+
+    def setUp(self):
+        # manage.py test forces settings.DEBUG=False, so the (unrelated)
+        # plan-based export gate is NOT bypassed here — give the user a real
+        # plan with export enabled so these tests exercise the profile check
+        # specifically, not that gate.
+        from subscriptions.models import Plan, Subscription
+        plan = Plan.objects.create(
+            name='t-export', display_name='Export Test',
+            can_incident_report=True, can_search_warrant=True,
+            can_export_pdf=True, can_export_docx=True,
+        )
+        self.factory = APIRequestFactory()
+        self.agency = Agency.objects.create(
+            name='Test PD', jurisdiction_type='municipal', ori='TE0000000',
+        )
+        self.user = User.objects.create(
+            email='incomplete@example.com', role='officer',
+        )
+        Subscription.objects.filter(user=self.user).delete()
+        Subscription.objects.create(
+            user=self.user, plan=plan, status='active',
+            stripe_subscription_id='sub_export_test',
+        )
+        self.doc = GeneratedDocument.objects.create(
+            user=self.user, doc_type='incident_report',
+            case_number='LE-TEST1', form_data={'facts': {'what': 'test'}},
+            ai_narrative='A test narrative.', status=GeneratedDocument.Status.COMPLETED,
+        )
+
+    def _export(self):
+        req = self.factory.post(f'/api/documents/{self.doc.id}/export/', {'format': 'pdf', 'review_acknowledged': True}, format='json')
+        force_authenticate(req, user=self.user)
+        return ExportDocumentView.as_view()(req, pk=self.doc.id)
+
+    def test_blocks_export_with_incomplete_profile(self):
+        # Once assigned to an agency, official identity fields are mandatory.
+        self.user.agency = self.agency
+        self.user.save(update_fields=['agency'])
+        resp = self._export()
+        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.data['error']['code'], 'incomplete_officer_profile')
+
+    @patch('documents.views.render_pdf', return_value=b'%PDF-FAKE')
+    def test_unassigned_user_can_export_a_watermarked_test_document(self, mock_render):
+        resp = self._export()
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue(mock_render.call_args.kwargs['is_test_export'])
+        officer = mock_render.call_args.args[3]
+        self.assertEqual(officer['department_name'], '[UNVERIFIED AGENCY]')
+
+    def test_allows_export_once_profile_is_complete(self):
+        self.user.first_name = 'Test'
+        self.user.last_name = 'Officer'
+        self.user.rank = 'Officer'
+        self.user.badge_number = 'T-001'
+        self.user.agency = self.agency
+        self.user.save()
+        resp = self._export()
+        self.assertEqual(resp.status_code, 200)
+
+    def test_all_document_types_require_profile_and_agency(self):
+        self.user.agency = self.agency
+        self.user.save(update_fields=['agency'])
+        warrant = GeneratedDocument.objects.create(
+            user=self.user, doc_type='search_warrant',
+            case_number='LE-TEST2',
+            form_data={'offenses': [], 'place_to_search': {'description': 'x'}},
+            ai_narrative='A test affidavit.', status=GeneratedDocument.Status.COMPLETED,
+        )
+        req = self.factory.post(f'/api/documents/{warrant.id}/export/', {'format': 'pdf', 'review_acknowledged': True}, format='json')
+        force_authenticate(req, user=self.user)
+        resp = ExportDocumentView.as_view()(req, pk=warrant.id)
+        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.data['error']['code'], 'incomplete_officer_profile')
+
+    @patch('documents.views.render_pdf', return_value=b'%PDF-FAKE')
+    def test_review_status_never_blocks_owner_export(self, _mock_render):
+        self.user.first_name = 'Test'
+        self.user.last_name = 'Officer'
+        self.user.rank = 'Officer'
+        self.user.badge_number = 'T-001'
+        self.user.agency = self.agency
+        self.user.save()
+        for review_status in (
+            GeneratedDocument.ReviewStatus.PENDING_SUPERVISOR,
+            GeneratedDocument.ReviewStatus.PENDING_PROSECUTOR,
+            GeneratedDocument.ReviewStatus.REJECTED,
+            GeneratedDocument.ReviewStatus.APPROVED,
+            GeneratedDocument.ReviewStatus.NOT_REQUIRED,
+        ):
+            self.doc.review_status = review_status
+            self.doc.save(update_fields=['review_status'])
+            self.assertEqual(self._export().status_code, 200, review_status)
+
+
+class AdminExportOnBehalfOfOfficerTests(TestCase):
+    """
+    An admin who approves a document needs to be able to export/file it too,
+    not just review and sign it — ExportDocumentView used to hard-filter to
+    user=request.user, which 404'd for anyone but the owning officer.
+    """
+
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.agency = Agency.objects.create(
+            name='Owner PD', jurisdiction_type='municipal', ori='OW0000001',
+        )
+        self.owner = User.objects.create(
+            email='owner@example.com', role='officer', badge_number='B-1',
+            department_name='Owner PD', ori='OW0000001', first_name='Owner',
+            last_name='Officer', rank='Officer', agency=self.agency,
+        )
+        self.other_officer = User.objects.create(email='other@example.com', role='officer')
+        self.admin = User.objects.create(email='export-admin@example.com', role='admin')
+        self.doc = GeneratedDocument.objects.create(
+            user=self.owner, doc_type='search_warrant', case_number='LE-ADMIN1',
+            form_data={'offenses': [], 'place_to_search': {'description': 'x'}},
+            ai_narrative='A test affidavit.', status=GeneratedDocument.Status.COMPLETED,
+        )
+
+    def _export_as(self, user):
+        req = self.factory.post(f'/api/documents/{self.doc.id}/export/', {'format': 'pdf', 'review_acknowledged': True}, format='json')
+        force_authenticate(req, user=user)
+        return ExportDocumentView.as_view()(req, pk=self.doc.id)
+
+    def test_admin_can_export_someone_elses_document(self):
+        resp = self._export_as(self.admin)
+        self.assertEqual(resp.status_code, 200)
+
+    def test_other_officer_cannot_export_someone_elses_document(self):
+        resp = self._export_as(self.other_officer)
+        self.assertEqual(resp.status_code, 403)
+
+    @patch('documents.views.render_pdf')
+    def test_admin_export_stamps_document_owners_identity_not_their_own(self, mock_render):
+        mock_render.return_value = b'%PDF-FAKE'
+        self._export_as(self.admin)
+        officer_arg = mock_render.call_args[0][3]
+        self.assertEqual(officer_arg['badge_number'], 'B-1')
+        self.assertEqual(officer_arg['department_name'], 'Owner PD')
+        self.assertNotEqual(officer_arg.get('email'), 'export-admin@example.com')
