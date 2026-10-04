@@ -105,17 +105,22 @@ function WorkflowsSection() {
             KLYVOREK gives officers realistic fictional scenarios to practice incident reports, search warrants, and arrest warrants, with AI assistance.
           </p>
 
-          <div className="max-w-4xl mx-auto bg-blue-50/70 border border-blue-200/80 rounded-2xl p-6 sm:p-7 text-left shadow-sm">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
-              <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+          <div className="max-w-4xl mx-auto bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow text-left border-l-4 border-l-blue-600">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                 <GraduationCap size={26} strokeWidth={2} />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-navy-800 text-lg sm:text-xl mb-1.5">
-                  Practice Starts With the Scenario
-                </h3>
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span className="text-[11px] font-bold text-blue-700 uppercase tracking-wider bg-blue-50 px-2 py-0.5 rounded">
+                    KLYVOREK Institute
+                  </span>
+                  <h3 className="font-bold text-gray-900 text-lg sm:text-xl">
+                    Practice Starts With the Scenario
+                  </h3>
+                </div>
                 <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                  Realistic practice requires realistic facts. The <span className="font-semibold text-gray-800">KLYVOREK Institute</span> develops and houses fictional scenarios and fact patterns designed for incident report, search warrant, and arrest warrant practice.
+                  Realistic practice requires realistic facts. The <span className="font-semibold text-gray-900">KLYVOREK Institute</span> develops and houses fictional scenarios and fact patterns designed for incident report, search warrant, and arrest warrant practice.
                 </p>
               </div>
             </div>
