@@ -109,7 +109,7 @@ export default function OfficerLayout() {
               className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-xl text-gray-300 hover:bg-gray-800/60 hover:text-white transition-colors"
             >
               <div className="flex items-center">
-                <FileText size={18} className="mr-3 shrink-0 text-blue-400" />
+                <FileText size={18} className="mr-3 shrink-0 text-gray-400" />
                 Create Document
               </div>
               {isCreateOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -154,7 +154,7 @@ export default function OfficerLayout() {
               isActive('/dashboard/history') ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
             }`}
           >
-            <History size={18} className="mr-3 shrink-0 text-gray-400" />
+            <History size={18} className={`mr-3 shrink-0 ${isActive('/dashboard/history') ? 'text-white' : 'text-gray-400'}`} />
             Document History
           </Link>
 
@@ -164,7 +164,7 @@ export default function OfficerLayout() {
               isActive('/dashboard/profile') ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
             }`}
           >
-            <User size={18} className="mr-3 shrink-0 text-gray-400" />
+            <User size={18} className={`mr-3 shrink-0 ${isActive('/dashboard/profile') ? 'text-white' : 'text-gray-400'}`} />
             Profile Settings
           </Link>
 
@@ -174,7 +174,7 @@ export default function OfficerLayout() {
               isActive('/dashboard/billing') ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
             }`}
           >
-            <CreditCard size={18} className="mr-3 shrink-0 text-gray-400" />
+            <CreditCard size={18} className={`mr-3 shrink-0 ${isActive('/dashboard/billing') ? 'text-white' : 'text-gray-400'}`} />
             Manage Billing
           </Link>
 
@@ -184,7 +184,7 @@ export default function OfficerLayout() {
               isActive('/institute') ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
             }`}
           >
-            <GraduationCap size={18} className="mr-3 shrink-0 text-amber-400" />
+            <GraduationCap size={18} className={`mr-3 shrink-0 ${isActive('/institute') ? 'text-white' : 'text-gray-400'}`} />
             KLYVOREK Institute
           </Link>
         </nav>
