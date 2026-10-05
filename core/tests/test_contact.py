@@ -20,7 +20,7 @@ class ContactViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
         sent = mail.outbox[0]
-        self.assertEqual(sent.to, ['klyvorek@gmail.com'])
+        self.assertEqual(sent.to, ['info@klyvorek.com'])
         self.assertEqual(sent.reply_to, ['jane@example.gov'])
         self.assertIn('Example PD', sent.body)
 
