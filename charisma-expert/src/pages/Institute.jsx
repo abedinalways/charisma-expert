@@ -194,8 +194,8 @@ function InstituteCta() {
     <section className="py-16 bg-navy-800 text-center text-white px-6">
       <div className="max-w-2xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">Start Training</h2>
-        <p className="text-blue-200 text-base mb-8">
-          Choose a scenario from the KLYVOREK Training Library, then practice your drafting skills on the KLYVOREK platform.
+        <p className="text-blue-200 text-base sm:text-lg mb-8 max-w-xl mx-auto">
+          Choose a scenario from the KLYVOREK Training Library.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
