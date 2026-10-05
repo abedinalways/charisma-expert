@@ -95,10 +95,10 @@ export default function OfficerProfile() {
   const plan = subscription?.plan || defaultPlan || profile.subscription || {};
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 font-serif">Officer Profile</h1>
-        <p className="text-gray-500 mt-1">Manage your professional credentials and account security.</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Officer Profile</h1>
+        <p className="text-gray-500 text-sm sm:text-base mt-1.5">Manage your professional credentials and account security.</p>
       </div>
 
       {profile.export_readiness && (
@@ -128,7 +128,7 @@ export default function OfficerProfile() {
                 <div className="p-2 bg-blue-100 rounded-lg text-blue-700">
                   <User size={20} />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 font-serif">Official Credentials</h2>
+                <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Official Credentials</h2>
               </div>
               <button 
                 onClick={() => { setIsEditing(!isEditing); setEditForm(profile); setProfileError(''); }}
@@ -238,7 +238,7 @@ export default function OfficerProfile() {
                 <div className="p-2 bg-gray-100 rounded-lg text-gray-700">
                   <Key size={20} />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 font-serif">Security Settings</h2>
+                <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Security Settings</h2>
               </div>
               <button 
                 onClick={() => { setIsChangingPass(!isChangingPass); setPassError(''); setPassSuccess(''); }}
@@ -282,7 +282,7 @@ export default function OfficerProfile() {
         {/* Right Col: Subscription Status */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-fit">
           <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-            <h2 className="text-xl font-bold text-gray-900 font-serif flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans flex items-center gap-2">
               <Briefcase size={20} className="text-blue-600" /> Subscription Plan
             </h2>
           </div>

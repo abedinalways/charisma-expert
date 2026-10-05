@@ -284,16 +284,16 @@ export default function CreateIncidentReport() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md">
+        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md shrink-0">
            <Shield className="text-white absolute" size={24} />
            <Clock className="text-[#111625] relative" size={12} fill="white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">Incident Report Practice</h1>
-          <p className="text-gray-500 mt-1">Use a fictional scenario to write an incident narrative, then receive AI assistance to help improve clarity, structure, and completeness.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Incident Report Practice</h1>
+          <p className="text-gray-500 text-sm sm:text-base mt-1">Use a fictional scenario to write an incident narrative, then receive AI assistance to help improve clarity, structure, and completeness.</p>
         </div>
       </div>
 
@@ -358,7 +358,7 @@ export default function CreateIncidentReport() {
         {/* Core Case Details */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Core Case Details</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Core Case Details</h2>
           </div>
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -478,7 +478,7 @@ export default function CreateIncidentReport() {
             </div>
 
             <div className="pt-4 border-t border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 font-serif mb-4">Detailed Facts</h3>
+              <h3 className="text-base sm:text-lg font-bold text-navy-900 font-sans mb-4">Detailed Facts</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Who (Parties involved)</label>
@@ -585,7 +585,7 @@ export default function CreateIncidentReport() {
         {/* Involved Parties */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Involved Parties</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Involved Parties</h2>
             <div className="flex flex-wrap gap-2">
               <button type="button" onClick={() => addInvolvedParty('complainant')} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">+ Complainant</button>
               <button type="button" onClick={() => addInvolvedParty('victim')} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">+ Victim</button>
@@ -679,7 +679,7 @@ export default function CreateIncidentReport() {
         {/* Property Items */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Property Items</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Property Items</h2>
             <button type="button" onClick={addPropertyItem} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
               + Add Property
             </button>
@@ -750,7 +750,7 @@ export default function CreateIncidentReport() {
         {templateType === 'campus' ? (
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
             <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 font-serif">Critical Notifications</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Critical Notifications</h2>
             </div>
             <div className="p-6 space-y-6">
               <div className="flex flex-wrap gap-8">
@@ -844,7 +844,7 @@ export default function CreateIncidentReport() {
           </div>
         ) : (
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm p-6 space-y-6">
-            <h3 className="text-lg font-bold text-gray-900 font-serif">NIBRS Modifiers</h3>
+            <h3 className="text-base sm:text-lg font-bold text-navy-900 font-sans">NIBRS Modifiers</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Weapon Details */}
               <div className="p-4 border border-gray-100 rounded-xl bg-gray-50/20">
@@ -955,7 +955,7 @@ export default function CreateIncidentReport() {
         {/* Narrative Style */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Narrative Style</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Narrative Style</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <label className={`flex items-start p-4 border rounded-xl cursor-pointer transition-colors ${narrativeStyle === 'first_person' ? 'border-blue-500 bg-blue-50/30' : 'border-gray-200 hover:bg-gray-50'}`}>

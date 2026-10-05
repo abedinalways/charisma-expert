@@ -82,26 +82,26 @@ export default function ManageBilling() {
   const isExpired = subscription?.status === 'expired'
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-8">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 font-serif">Manage Billing</h1>
-        <p className="text-gray-500 mt-2">View your current usage and manage your subscription plan.</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Manage Billing</h1>
+        <p className="text-gray-500 text-sm sm:text-base mt-1.5">View your current usage and manage your subscription plan.</p>
       </div>
 
-      {message && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{message}</div>}
-      {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {message && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 font-medium">{message}</div>}
+      {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium">{error}</div>}
 
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-xs">
             <CreditCard size={24} />
           </div>
           <div>
-            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Current Plan</p>
-            <h2 className="text-2xl font-bold text-gray-900">{currentPlan?.display_name || 'Free Evaluation'}</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Current Plan</p>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">{currentPlan?.display_name || 'Free Evaluation'}</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               {isEvaluation
-                ? `${trialDaysRemaining} day${trialDaysRemaining === 1 ? '' : 's'} remaining in your free evaluation`
+                ? 'Try KLYVOREK free for up to 3 document generations. No credit card required.'
                 : isExpired
                 ? 'Free evaluation expired - choose a paid plan to continue'
                 : currentPlan?.name === 'free'
@@ -112,9 +112,9 @@ export default function ManageBilling() {
         </div>
 
         {subscription?.cancel_at_period_end && (
-          <div className="bg-amber-50 text-amber-800 px-4 py-3 rounded-lg border border-amber-200 flex items-start gap-3 max-w-md">
+          <div className="bg-amber-50 text-amber-800 px-4 py-3 rounded-xl border border-amber-200 flex items-start gap-3 max-w-md">
             <AlertCircle size={20} className="shrink-0 mt-0.5" />
-            <div className="text-sm">
+            <div className="text-xs sm:text-sm">
               <p className="font-semibold">Subscription Canceling</p>
               <p>Your subscription will not renew and will end on {new Date(subscription.current_period_end).toLocaleDateString()}.</p>
             </div>
@@ -122,17 +122,17 @@ export default function ManageBilling() {
         )}
       </div>
 
-      <div className="pt-6">
+      <div className="pt-2">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-xl font-bold text-gray-900 font-serif">Available Plans</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight font-sans">Available Plans</h2>
           <div className="inline-flex w-fit rounded-xl border border-gray-200 bg-gray-50 p-1">
             {['monthly', 'yearly'].map((period) => (
               <button
                 key={period}
                 type="button"
                 onClick={() => setBillingPeriod(period)}
-                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-                  billingPeriod === period ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+                className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${
+                  billingPeriod === period ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 {period === 'yearly' ? 'Annual - 2 months free' : 'Monthly'}
@@ -214,43 +214,58 @@ export default function ManageBilling() {
                     )}
                   </div>
 
-                  <ul className="space-y-3 mb-8 flex-1">
-                    <li className="flex items-center gap-3">
-                      <Check size={18} className="text-emerald-500 shrink-0" />
-                      <span className="text-sm text-gray-700">AI Incident Reports</span>
+                  <ul className="space-y-2.5 mb-7 flex-1">
+                    <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                      <Check size={16} className="text-emerald-500 shrink-0" />
+                      <span>Incident Reports</span>
                     </li>
-                    <li className="flex items-center gap-3">
-                      <Check size={18} className="text-emerald-500 shrink-0" />
-                      <span className="text-sm text-gray-700">
-                        {isFree ? '10 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
+                    <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                      <Check size={16} className="text-emerald-500 shrink-0" />
+                      <span>
+                        {isFree ? '3 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
                       </span>
                     </li>
-                    {isFree && (
-                      <li className="flex items-center gap-3">
-                        <Check size={18} className="text-emerald-500 shrink-0" />
-                        <span className="text-sm text-gray-700">14-Day Evaluation - No Credit Card</span>
-                      </li>
+                    {isFree ? (
+                      <>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>No Credit Card</span>
+                        </li>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>Search Warrants</span>
+                        </li>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>Arrest Warrants</span>
+                        </li>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>PDF + Editable DOCX Export</span>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        {(plan.can_search_warrant || plan.can_arrest_warrant) && (
+                          <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                            <Check size={16} className="text-emerald-500 shrink-0" />
+                            <span>{formatLimit(plan.warrant_document_limit)} Warrants / Month</span>
+                          </li>
+                        )}
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>Search Warrants</span>
+                        </li>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>Arrest Warrants</span>
+                        </li>
+                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0" />
+                          <span>PDF + Editable DOCX Export</span>
+                        </li>
+                      </>
                     )}
-                    {(plan.can_search_warrant || plan.can_arrest_warrant) && !isFree && (
-                      <li className="flex items-center gap-3">
-                        <Check size={18} className="text-emerald-500 shrink-0" />
-                        <span className="text-sm text-gray-700">
-                          {formatLimit(plan.warrant_document_limit)} Warrants / Month
-                        </span>
-                      </li>
-                    )}
-                    <li className="flex items-center gap-3">
-                      {plan.can_search_warrant ? <Check size={18} className="text-emerald-500 shrink-0" /> : <X size={18} className="text-gray-300 shrink-0" />}
-                      <span className={`text-sm ${plan.can_search_warrant ? 'text-gray-700' : 'text-gray-400'}`}>
-                        AI Search Warrants
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      {plan.can_arrest_warrant ? <Check size={18} className="text-emerald-500 shrink-0" /> : <X size={18} className="text-gray-300 shrink-0" />}
-                      <span className={`text-sm ${plan.can_arrest_warrant ? 'text-gray-700' : 'text-gray-400'}`}>
-                        AI Arrest Warrants
-                      </span>
-                    </li>
                   </ul>
 
                   <button

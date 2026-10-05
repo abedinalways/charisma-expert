@@ -98,14 +98,14 @@ export default function CreateArrestWarrant() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       <div className="flex items-center gap-4">
-        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md">
+        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md shrink-0">
            <UserPlus className="text-white" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">Arrest Warrant Practice</h1>
-          <p className="text-gray-500 mt-1">Use a fictional scenario to draft an arrest warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Arrest Warrant Practice</h1>
+          <p className="text-gray-500 text-sm sm:text-base mt-1">Use a fictional scenario to draft an arrest warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
         </div>
       </div>
 
@@ -130,7 +130,7 @@ export default function CreateArrestWarrant() {
         {/* Case & Defendant Details */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Case & Defendant Details</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Case & Defendant Details</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -165,7 +165,7 @@ export default function CreateArrestWarrant() {
         {/* Offense */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Primary Offense</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Primary Offense</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -182,7 +182,7 @@ export default function CreateArrestWarrant() {
         {/* Identifiers */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Defendant Identifiers</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Defendant Identifiers</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="md:col-span-2">
@@ -227,7 +227,7 @@ export default function CreateArrestWarrant() {
         {/* Probable Cause */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Probable Cause Affidavit</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Probable Cause Affidavit</h2>
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <input type="checkbox" checked={includeAffidavit} onChange={(e) => setIncludeAffidavit(e.target.checked)} className="w-4 h-4 text-blue-600 rounded" />
               Include Affidavit

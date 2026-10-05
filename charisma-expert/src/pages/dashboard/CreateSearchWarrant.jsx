@@ -104,14 +104,14 @@ export default function CreateSearchWarrant() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       <div className="flex items-center gap-4">
-        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md">
+        <div className="bg-[#111625] w-12 h-12 rounded-xl flex items-center justify-center shadow-md shrink-0">
            <FileSearch className="text-white" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-serif">Search Warrant Practice</h1>
-          <p className="text-gray-500 mt-1">Use a fictional scenario to draft a search warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Search Warrant Practice</h1>
+          <p className="text-gray-500 text-sm sm:text-base mt-1">Use a fictional scenario to draft a search warrant application, then receive AI assistance to strengthen organization, clarity, and factual support.</p>
         </div>
       </div>
 
@@ -136,7 +136,7 @@ export default function CreateSearchWarrant() {
         {/* Core Case & Court Details */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Case & Court</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Case & Court</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
@@ -157,7 +157,7 @@ export default function CreateSearchWarrant() {
         {/* Offenses */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Offenses</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Offenses</h2>
             <button type="button" onClick={addOffense} className="text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-800"><Plus size={16} /> Add Offense</button>
           </div>
           <div className="p-6 space-y-4">
@@ -181,7 +181,7 @@ export default function CreateSearchWarrant() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
             <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 font-serif">Place to Search</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Place to Search</h2>
             </div>
             <div className="p-6 space-y-4">
               <div>
@@ -203,7 +203,7 @@ export default function CreateSearchWarrant() {
 
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
             <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 font-serif">Items to Seize & Execution</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Items to Seize & Execution</h2>
             </div>
             <div className="p-6 space-y-4 flex-1">
               <div>
@@ -230,7 +230,7 @@ export default function CreateSearchWarrant() {
         {/* Probable Cause */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
           <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 font-serif">Probable Cause Affidavit</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-navy-900 font-sans">Probable Cause Affidavit</h2>
           </div>
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>

@@ -65,11 +65,11 @@ export default function DocumentHistory() {
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-6">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 font-serif">Document History</h1>
-        <p className="text-gray-500 mt-1 text-lg">View, search, and manage your previously generated documentation.</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight font-sans">Document History</h1>
+        <p className="text-gray-500 text-sm sm:text-base mt-1.5">View, search, and manage your previously generated documentation.</p>
       </div>
 
       {/* Main Card */}

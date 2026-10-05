@@ -295,7 +295,7 @@ export default function GeneratedDocument() {
   const SOURCE_LABELS = { llm: 'AI Review', structural: 'Structural Check', system: 'System' };
 
   return (
-    <div className="p-4 md:p-8 max-w-[95rem] mx-auto space-y-8 bg-slate-50/50 min-h-[calc(100vh-4rem)]">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Header Section */}
       <div className="bg-white rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-200/60 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-full blur-3xl -z-10 opacity-70 translate-x-1/3 -translate-y-1/3"></div>
