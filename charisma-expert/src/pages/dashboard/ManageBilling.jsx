@@ -161,19 +161,22 @@ export default function ManageBilling() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {plans.map((plan) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
+            {plans.map((plan, idx) => {
               const isCurrentPlan = currentPlan?.id === plan.id
               const isPopular = plan.name === 'standard'
               const isProcessing = checkoutLoadingFor === plan.id
               const isFree = plan.name === 'free'
               const price = billingPeriod === 'yearly' ? plan.price_yearly : plan.price_monthly
               const disableFreeAction = isFree && currentPlan?.name === 'free'
+              const isLastCard = idx === 2
 
               return (
                 <div
                   key={plan.id}
-                  className={`relative rounded-2xl border-2 p-8 flex flex-col bg-white ${
+                  className={`relative rounded-2xl border-2 p-6 sm:p-7 xl:p-8 flex flex-col bg-white ${
+                    isLastCard ? 'md:col-span-2 md:max-w-md md:mx-auto md:w-full xl:col-span-1 xl:max-w-none' : ''
+                  } ${
                     isCurrentPlan
                       ? 'border-blue-600 shadow-md ring-1 ring-blue-600'
                       : isPopular
@@ -183,85 +186,85 @@ export default function ManageBilling() {
                 >
                   {isPopular && !isCurrentPlan && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                      <span className="bg-gray-900 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                      <span className="bg-gray-900 text-white text-xs font-semibold px-3.5 py-1 rounded-full whitespace-nowrap shadow-sm">
                         Most Popular
                       </span>
                     </div>
                   )}
                   {isCurrentPlan && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                      <span className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                      <span className="bg-blue-600 text-white text-xs font-semibold px-3.5 py-1 rounded-full whitespace-nowrap shadow-sm">
                         Current Plan
                       </span>
                     </div>
                   )}
 
-                  <div className="mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.display_name}</h3>
-                    <p className="text-sm text-gray-500 min-h-[40px]">
+                  <div className="mb-5 sm:mb-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-1.5">{plan.display_name}</h3>
+                    <p className="text-xs sm:text-sm text-gray-500 min-h-[38px] leading-relaxed">
                       {plan.description || 'Access essential law enforcement tools.'}
                     </p>
                   </div>
 
-                  <div className="mb-8 flex items-baseline">
-                    <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
+                  <div className="mb-6 sm:mb-8 flex items-baseline flex-wrap gap-1">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight shrink-0">
                       ${isFree ? '0' : price}
                     </span>
                     {!isFree && (
-                      <span className="text-gray-500 text-sm font-medium ml-1">
+                      <span className="text-gray-500 text-sm font-medium">
                         {billingPeriod === 'yearly' ? '/yr' : '/mo'}
                       </span>
                     )}
                   </div>
 
                   <ul className="space-y-2.5 mb-7 flex-1">
-                    <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                      <Check size={16} className="text-emerald-500 shrink-0" />
+                    <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                      <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                       <span>Incident Reports</span>
                     </li>
-                    <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                      <Check size={16} className="text-emerald-500 shrink-0" />
+                    <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                      <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                       <span>
                         {isFree ? '3 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
                       </span>
                     </li>
                     {isFree ? (
                       <>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>No Credit Card</span>
                         </li>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>Search Warrants</span>
                         </li>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>Arrest Warrants</span>
                         </li>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>PDF + Editable DOCX Export</span>
                         </li>
                       </>
                     ) : (
                       <>
                         {(plan.can_search_warrant || plan.can_arrest_warrant) && (
-                          <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                            <Check size={16} className="text-emerald-500 shrink-0" />
+                          <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                            <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                             <span>{formatLimit(plan.warrant_document_limit)} Warrants / Month</span>
                           </li>
                         )}
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>Search Warrants</span>
                         </li>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>Arrest Warrants</span>
                         </li>
-                        <li className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-700">
-                          <Check size={16} className="text-emerald-500 shrink-0" />
+                        <li className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700">
+                          <Check size={16} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>PDF + Editable DOCX Export</span>
                         </li>
                       </>

@@ -19,37 +19,39 @@ function PricingHeader() {
   )
 }
 
-function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribingTo, onPlanClick }) {
+function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribingTo, onPlanClick, isLastCard }) {
   return (
     <div
-      className={`relative rounded-3xl border-2 p-10 xl:p-12 flex flex-col bg-white min-h-[600px] ${
+      className={`relative rounded-3xl border-2 p-6 sm:p-8 xl:p-10 flex flex-col bg-white min-h-[560px] ${
+        isLastCard ? 'md:col-span-2 md:max-w-md md:mx-auto md:w-full lg:col-span-1 lg:max-w-none' : ''
+      } ${
         isPopular ? 'border-navy-800 shadow-2xl xl:scale-105 z-10' : 'border-gray-200 shadow-sm z-0'
       }`}
     >
       {isPopular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <span className="bg-navy-800 text-white text-xs font-semibold px-4 py-1.5 rounded-full">
+          <span className="bg-navy-800 text-white text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">
             Most Popular
           </span>
         </div>
       )}
 
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{plan.display_name}</h2>
-        <p className="text-sm text-gray-500 leading-relaxed">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{plan.display_name}</h2>
+        <p className="text-xs sm:text-sm text-gray-500 leading-relaxed min-h-[38px]">
           {isFree
             ? 'Try KLYVOREK free for up to 3 document generations. No credit card required.'
             : plan.description || 'Access essential documentation training tools with fictional scenarios.'}
         </p>
       </div>
 
-      <div className="mb-10">
-        <div className="flex items-baseline">
-          <span className="text-6xl font-extrabold text-gray-900 tracking-tight">
+      <div className="mb-6 sm:mb-8">
+        <div className="flex items-baseline flex-wrap gap-1">
+          <span className="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight shrink-0">
             {isFree ? '$0' : `$${price}`}
           </span>
           {!isFree && (
-            <span className="text-gray-500 text-lg font-medium ml-1">
+            <span className="text-gray-500 text-base sm:text-lg font-medium">
               {billingPeriod === 'yearly' ? '/yr' : '/mo'}
             </span>
           )}
@@ -59,47 +61,47 @@ function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribin
         )}
       </div>
 
-      <ul className="space-y-4 mb-10 flex-1">
-        <li className="flex items-center gap-3">
-          <Check size={20} className="text-emerald-500 shrink-0" />
-          <span className="text-sm text-gray-700 font-medium">Incident Reports</span>
+      <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
+        <li className="flex items-start gap-3">
+          <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+          <span className="text-xs sm:text-sm text-gray-700 font-medium leading-snug">Incident Reports</span>
         </li>
-        <li className="flex items-center gap-3">
-          <Check size={20} className="text-emerald-500 shrink-0" />
-          <span className="text-sm text-gray-700 font-medium">
+        <li className="flex items-start gap-3">
+          <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+          <span className="text-xs sm:text-sm text-gray-700 font-medium leading-snug">
             {isFree ? '3 Total Generations During Evaluation' : `${formatLimit(plan.document_limit)} Incident Reports / Month`}
           </span>
         </li>
         {isFree && (
-          <li className="flex items-center gap-3">
-            <Check size={20} className="text-emerald-500 shrink-0" />
-            <span className="text-sm text-gray-700 font-medium">No Credit Card</span>
+          <li className="flex items-start gap-3">
+            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+            <span className="text-xs sm:text-sm text-gray-700 font-medium leading-snug">No Credit Card</span>
           </li>
         )}
         {(plan.can_search_warrant || plan.can_arrest_warrant) && !isFree && (
-          <li className="flex items-center gap-3">
-            <Check size={20} className="text-emerald-500 shrink-0" />
-            <span className="text-sm text-gray-700 font-medium">
+          <li className="flex items-start gap-3">
+            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+            <span className="text-xs sm:text-sm text-gray-700 font-medium leading-snug">
               {formatLimit(plan.warrant_document_limit)} Warrants / Month
             </span>
           </li>
         )}
-        <li className="flex items-center gap-3">
-          {plan.can_search_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
-          <span className={`text-sm ${plan.can_search_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
+        <li className="flex items-start gap-3">
+          {plan.can_search_warrant ? <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" /> : <X size={18} className="text-gray-300 shrink-0 mt-0.5" />}
+          <span className={`text-xs sm:text-sm ${plan.can_search_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'} leading-snug`}>
             Search Warrants
           </span>
         </li>
-        <li className="flex items-center gap-3">
-          {plan.can_arrest_warrant ? <Check size={20} className="text-emerald-500 shrink-0" /> : <X size={20} className="text-gray-300 shrink-0" />}
-          <span className={`text-sm ${plan.can_arrest_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'}`}>
+        <li className="flex items-start gap-3">
+          {plan.can_arrest_warrant ? <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" /> : <X size={18} className="text-gray-300 shrink-0 mt-0.5" />}
+          <span className={`text-xs sm:text-sm ${plan.can_arrest_warrant ? 'text-gray-700 font-medium' : 'text-gray-400'} leading-snug`}>
             Arrest Warrants
           </span>
         </li>
         {(plan.can_export_pdf || plan.can_export_docx) && (
-          <li className="flex items-center gap-3">
-            <Check size={20} className="text-emerald-500 shrink-0" />
-            <span className="text-sm text-gray-700 font-medium">
+          <li className="flex items-start gap-3">
+            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+            <span className="text-xs sm:text-sm text-gray-700 font-medium leading-snug">
               {plan.can_export_docx ? 'PDF + Editable DOCX Export' : 'PDF Export'}
             </span>
           </li>
@@ -222,11 +224,12 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-12 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 items-stretch">
                 {plans.map((plan, idx) => {
                   const isPopular = idx === 1 || plan.name === 'standard'
                   const isFree = plan.name === 'free'
                   const price = billingPeriod === 'yearly' ? plan.price_yearly : plan.price_monthly
+                  const isLastCard = idx === 2
 
                   return (
                     <PricingCard
@@ -238,6 +241,7 @@ export default function Pricing() {
                       billingPeriod={billingPeriod}
                       subscribingTo={subscribingTo}
                       onPlanClick={handlePlanClick}
+                      isLastCard={isLastCard}
                     />
                   )
                 })}

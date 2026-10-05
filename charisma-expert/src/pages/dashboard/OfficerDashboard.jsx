@@ -255,7 +255,7 @@ export default function OfficerDashboard() {
           </div>
 
           {/* Card 3: Arrest Warrants */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all group flex flex-col justify-between">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all group flex flex-col justify-between md:col-span-2 lg:col-span-1">
             <div>
               <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-5 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-xs">
                 <Scale size={22} />
