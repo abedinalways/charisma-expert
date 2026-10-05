@@ -387,30 +387,32 @@ export default function CreateIncidentReport() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Date *</label>
+                <div className="flex items-center justify-between h-8 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700">Date *</label>
+                </div>
                 <input 
                   type="date" 
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
+                  className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
                   required 
                 />
               </div>
               <div>
-                <div className="flex items-center justify-between gap-3 mb-2">
+                <div className="flex items-center justify-between h-8 mb-2">
                   <label className="block text-sm font-semibold text-gray-700">Time *</label>
                   <div className="inline-flex rounded-lg border border-gray-200 bg-white p-0.5 text-xs font-semibold">
                     <button
                       type="button"
                       onClick={() => setTimeFormat('standard')}
-                      className={`px-2.5 py-1 rounded-md ${timeFormat === 'standard' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${timeFormat === 'standard' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
                     >
                       Standard
                     </button>
                     <button
                       type="button"
                       onClick={() => setTimeFormat('military')}
-                      className={`px-2.5 py-1 rounded-md ${timeFormat === 'military' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                      className={`px-2.5 py-1 rounded-md transition-colors ${timeFormat === 'military' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
                     >
                       Military
                     </button>
@@ -422,17 +424,19 @@ export default function CreateIncidentReport() {
                   value={time}
                   onChange={(e) => setTime(timeFormat === 'military' ? e.target.value : normalizeTime(e.target.value))}
                   onBlur={(e) => setTime(normalizeTime(e.target.value))}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
+                  className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
                   placeholder={timeFormat === 'military' ? 'e.g. 1930' : undefined}
                   required 
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Urgency</label>
+                <div className="flex items-center justify-between h-8 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700">Urgency</label>
+                </div>
                 <select
                   value={incidentUrgency}
                   onChange={(e) => setIncidentUrgency(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700"
+                  className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700"
                 >
                   <option value="low">Low</option>
                   <option value="normal">Normal</option>
@@ -450,7 +454,7 @@ export default function CreateIncidentReport() {
                     type="date" 
                     value={reportedDate}
                     onChange={(e) => setReportedDate(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
+                    className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
                   />
                 </div>
                 <div>
@@ -459,7 +463,7 @@ export default function CreateIncidentReport() {
                     type="time" 
                     value={reportedTime}
                     onChange={(e) => setReportedTime(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
+                    className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors text-gray-700" 
                   />
                 </div>
               </div>
