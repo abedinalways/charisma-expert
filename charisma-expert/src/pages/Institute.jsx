@@ -50,6 +50,11 @@ const steps = [
     number: '5',
     title: 'Review and Improve',
     description: 'Compare the draft with the scenario and make any necessary corrections or refinements.',
+    bullets: [
+      'The officer provides the facts.',
+      'KLYVOREK builds the draft.',
+      'The officer reviews, refines, and improves it.',
+    ],
   },
 ]
 
@@ -127,6 +132,16 @@ function HowItWorks() {
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
                 <p className="text-gray-600 text-base leading-relaxed mb-3">{step.description}</p>
+                {step.bullets && (
+                  <ul className="mb-4 space-y-1.5 text-sm text-gray-700 bg-gray-50/80 rounded-xl p-3.5 border border-gray-100">
+                    {step.bullets.map((b, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
+                        <span className="font-medium">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 {step.actionUrl && (
                   <a
                     href={step.actionUrl}
