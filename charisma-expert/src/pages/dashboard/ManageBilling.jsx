@@ -161,22 +161,19 @@ export default function ManageBilling() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
-            {plans.map((plan, idx) => {
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+            {plans.map((plan) => {
               const isCurrentPlan = currentPlan?.id === plan.id
               const isPopular = plan.name === 'standard'
               const isProcessing = checkoutLoadingFor === plan.id
               const isFree = plan.name === 'free'
               const price = billingPeriod === 'yearly' ? plan.price_yearly : plan.price_monthly
               const disableFreeAction = isFree && currentPlan?.name === 'free'
-              const isLastCard = idx === 2
 
               return (
                 <div
                   key={plan.id}
                   className={`relative rounded-2xl border-2 p-6 sm:p-7 xl:p-8 flex flex-col bg-white ${
-                    isLastCard ? 'md:col-span-2 md:max-w-md md:mx-auto md:w-full xl:col-span-1 xl:max-w-none' : ''
-                  } ${
                     isCurrentPlan
                       ? 'border-blue-600 shadow-md ring-1 ring-blue-600'
                       : isPopular

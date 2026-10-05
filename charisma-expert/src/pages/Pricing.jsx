@@ -19,12 +19,10 @@ function PricingHeader() {
   )
 }
 
-function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribingTo, onPlanClick, isLastCard }) {
+function PricingCard({ plan, isPopular, isFree, price, billingPeriod, subscribingTo, onPlanClick }) {
   return (
     <div
       className={`relative rounded-3xl border-2 p-6 sm:p-8 xl:p-10 flex flex-col bg-white min-h-[560px] ${
-        isLastCard ? 'md:col-span-2 md:max-w-md md:mx-auto md:w-full lg:col-span-1 lg:max-w-none' : ''
-      } ${
         isPopular ? 'border-navy-800 shadow-2xl xl:scale-105 z-10' : 'border-gray-200 shadow-sm z-0'
       }`}
     >
@@ -224,12 +222,11 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 items-stretch">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12 items-stretch">
                 {plans.map((plan, idx) => {
                   const isPopular = idx === 1 || plan.name === 'standard'
                   const isFree = plan.name === 'free'
                   const price = billingPeriod === 'yearly' ? plan.price_yearly : plan.price_monthly
-                  const isLastCard = idx === 2
 
                   return (
                     <PricingCard
@@ -241,7 +238,6 @@ export default function Pricing() {
                       billingPeriod={billingPeriod}
                       subscribingTo={subscribingTo}
                       onPlanClick={handlePlanClick}
-                      isLastCard={isLastCard}
                     />
                   )
                 })}
