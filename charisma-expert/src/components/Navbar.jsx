@@ -31,7 +31,7 @@ export default function Navbar() {
   return (
     <header className="bg-white border-b border-gray-100 sticky top-0 z-40">
       {/* Full-width bar — logo left, nav truly centered, auth right */}
-      <div className="w-full px-4 sm:px-6 lg:px-6 xl:px-12">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="relative flex items-center h-16">
 
           {/* Logo — pinned to the left */}
