@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPost } from '../api/blog'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
 const resolveUrl = (url) => url?.startsWith('/') ? `${BASE_URL}${url}` : url
 const categoryLabel = (category) => String(category || 'general').replaceAll('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
 
