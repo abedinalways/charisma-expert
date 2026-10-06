@@ -7,9 +7,9 @@ import logoImg from '../assets/logo01.png';
 const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'Blog', to: '/blog' },
   { label: 'About', to: '/about' },
   { label: 'FAQ', to: '/faq' },
-  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
   { label: 'KLYVOREK Institute', to: '/institute' },
 ]
