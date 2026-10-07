@@ -81,8 +81,8 @@ export default function OfficerLayout() {
             <img src={logoImg} alt="KLYVOREK logo" className="h-10 w-10 rounded-full object-cover shrink-0 ring-1 ring-white/10" />
             <div className="leading-tight">
               <span className="text-white font-black text-base tracking-[0.14em] block">KLYVOREK</span>
-              <span className="text-[8.5px] text-gray-400 font-semibold tracking-[0.06em] uppercase block">Law Enforcement Documentation</span>
-              <span className="text-[7.5px] text-blue-400/90 font-medium tracking-[0.08em] uppercase block">Built for Real-World Work</span>
+              <span className="text-[8.5px] text-gray-400 font-semibold tracking-[0.06em] uppercase block">Where Law Enforcement Work</span>
+              <span className="text-[7.5px] text-blue-400/90 font-medium tracking-[0.08em] uppercase block">Becomes Documentation</span>
             </div>
           </Link>
           <button className="lg:hidden text-gray-400 hover:text-white p-1" onClick={() => setIsSidebarOpen(false)}>
