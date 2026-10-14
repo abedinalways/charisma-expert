@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Check, X, Lock, Loader2 } from 'lucide-react'
+import { Check, X, Lock, Loader2, ExternalLink } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { listPlans } from '../api/subscriptions'
@@ -241,6 +241,21 @@ export default function Pricing() {
                     />
                   )
                 })}
+              </div>
+
+              {/* Scenarios Purchase Notice */}
+              <div className="mt-12 max-w-3xl mx-auto bg-blue-50/80 border border-blue-200/90 rounded-2xl p-6 sm:p-7 text-center shadow-xs">
+                <p className="text-gray-800 text-sm sm:text-base font-medium mb-4 leading-relaxed">
+                  Platform plans cover KLYVOREK access. Paid training scenarios are purchased separately through the KLYVOREK Institute.
+                </p>
+                <a
+                  href="https://klyvorekinstitute.com/scenarios-2/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5"
+                >
+                  Explore Scenarios <ExternalLink size={15} />
+                </a>
               </div>
             </>
           )}
