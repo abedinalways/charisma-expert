@@ -26,7 +26,7 @@ const steps = [
     number: '1',
     title: 'Choose a Scenario',
     description: 'Select a training exercise from the KLYVOREK Training Library.',
-    actionUrl: 'https://klyvorekinstitute.com',
+    actionUrl: 'https://klyvorekinstitute.com/scenarios-2/',
     actionLabel: 'Connect to KLYVOREK Training Library',
   },
   {
@@ -76,12 +76,12 @@ function InstituteHero() {
           The KLYVOREK Institute provides fictional scenarios and fact patterns for law enforcement documentation training.
         </p>
         <a
-          href="https://klyvorekinstitute.com"
+          href="https://klyvorekinstitute.com/scenarios-2/"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg transition-all"
         >
-          Explore Training Library <ExternalLink size={18} />
+          Choose a Scenario <ExternalLink size={18} />
         </a>
       </div>
     </section>
@@ -199,12 +199,12 @@ function InstituteCta() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
-            href="https://klyvorekinstitute.com"
+            href="https://klyvorekinstitute.com/scenarios-2/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg transition-colors"
           >
-            Go to KLYVOREK Training Library <ExternalLink size={18} />
+            Choose a Scenario <ExternalLink size={18} />
           </a>
           <Link
             to="/signup"

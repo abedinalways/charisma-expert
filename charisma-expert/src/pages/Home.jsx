@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Shield, BookOpen, FileText, Search, UserCheck, CheckCircle2, Clock, Sparkles, GraduationCap } from 'lucide-react'
+import { Shield, BookOpen, FileText, Search, UserCheck, CheckCircle2, Clock, Sparkles, GraduationCap, ExternalLink } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -79,12 +79,14 @@ function HeroSection() {
             >
               Start Your Training
             </Link>
-            <Link
-              to="/institute"
-              className="border border-white/40 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors"
+            <a
+              href="https://klyvorekinstitute.com/scenarios-2/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white/40 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors inline-flex items-center gap-2"
             >
-              KLYVOREK Institute
-            </Link>
+              Explore Scenarios <ExternalLink size={16} />
+            </a>
           </div>
         </div>
       </div>

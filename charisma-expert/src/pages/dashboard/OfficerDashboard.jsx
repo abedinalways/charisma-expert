@@ -191,12 +191,12 @@ export default function OfficerDashboard() {
 
         <div className="relative z-10 shrink-0 flex flex-col items-start md:items-end gap-1.5 w-full md:w-auto">
           <a
-            href="https://klyvorekinstitute.com"
+            href="https://klyvorekinstitute.com/scenarios-2/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-sm transition-all hover:shadow hover:-translate-y-0.5 w-full sm:w-auto"
           >
-            Visit the KLYVOREK Institute <ExternalLink size={15} />
+            Choose a Scenario <ExternalLink size={15} />
           </a>
           <span className="text-[10px] font-bold text-gray-400 tracking-[0.16em] uppercase text-center w-full md:text-right">
             PRACTICE | IMPROVE | BUILD CONFIDENCE
