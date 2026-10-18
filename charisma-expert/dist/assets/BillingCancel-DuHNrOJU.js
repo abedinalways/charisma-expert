@@ -1,0 +1,6 @@
+import{c as s,j as e,L as a}from"./index-DUQ5raPv.js";import{N as r,F as t}from"./Footer-BdOBHSZX.js";import"./shield-8xDtRv-s.js";/**
+ * @license lucide-react v0.468.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const c=s("CircleX",[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["path",{d:"m15 9-6 6",key:"1uzhvr"}],["path",{d:"m9 9 6 6",key:"z0biqf"}]]);function o(){return e.jsxs("div",{className:"min-h-screen flex flex-col",children:[e.jsx(r,{}),e.jsx("main",{className:"flex-1 flex items-center justify-center px-4 py-20",children:e.jsxs("div",{className:"max-w-md w-full text-center",children:[e.jsx("div",{className:"w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6",children:e.jsx(c,{className:"text-gray-400",size:36})}),e.jsx("h1",{className:"text-2xl font-bold text-gray-900 mb-2",children:"Checkout cancelled"}),e.jsx("p",{className:"text-gray-500 mb-8",children:"No changes were made to your subscription. You can try again whenever you're ready."}),e.jsx(a,{to:"/pricing",className:"inline-block bg-navy-800 text-white font-semibold px-6 py-3 rounded-xl hover:bg-navy-700 transition-colors",children:"Back to Pricing"})]})}),e.jsx(t,{})]})}export{o as default};

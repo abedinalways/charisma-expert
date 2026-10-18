@@ -1,12 +1,18 @@
+# ==========================================
 # Dependencies (Frontend & Node)
+# ==========================================
 node_modules/
 */node_modules/
+**/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
+# ==========================================
 # Python Virtual Environments
+# ==========================================
 venv/
 env/
 .venv/
@@ -14,25 +20,58 @@ ENV/
 env.bak/
 venv.bak/
 
+# ==========================================
 # Python cache & bytecode
+# ==========================================
 __pycache__/
 */__pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+*.pyd
+.Python
 *.so
 .pytest_cache/
 *.egg-info/
 .eggs/
+develop-eggs/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+.installed.cfg
+*.egg
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+htmlcov/
 
-# Django
+# ==========================================
+# Django Local State & Media
+# ==========================================
 *.sqlite3
 db.sqlite3
 db.sqlite3-journal
 /media/
+media/
 /staticfiles/
+staticfiles/
 local_settings.py
 
+# ==========================================
 # Environment variables & secrets
+# ==========================================
 .env
 .env.local
 .env.*.local
@@ -42,24 +81,48 @@ local_settings.py
 !.env.example
 !.env.aws.example
 !.env.production.example
+charisma-expert/.env
+charisma-expert/.env.*
+!charisma-expert/.env.example
+!charisma-expert/.env.production.example
 secrets/
 *.pem
 *.key
+*.crt
+firebase_credentials.json
 
-# Build outputs
+# ==========================================
+# Vite & Frontend Builds
+# ==========================================
 dist/
+**/dist/
 dist-ssr/
+**/dist-ssr/
 build/
+.vite/
+**/.vite/
 *.local
 
-# IDE & Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# ==========================================
+# AI / ML Models & Heavy Weights
+# ==========================================
+fine_tuned_model/
+training_data.jsonl
+*.gguf
+*.safetensors
+*.bin
+ollama_data/
 
-# Operating System files
+# ==========================================
+# Docker & Database Volumes
+# ==========================================
+postgres_data/
+redis_data/
+.docker/
+
+# ==========================================
+# IDE & Operating System files
+# ==========================================
 .DS_Store
 .DS_Store?
 ._*
@@ -67,8 +130,24 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
+.idea/
+*.swp
+*.swo
+*~
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# Logs
+# ==========================================
+# Logs & Temporary Files
+# ==========================================
 *.log
 logs/
-
+--forward-to
+env_backup/
+branch_structure.json
+temp_*.bat
+temp_*
+temp_check/
