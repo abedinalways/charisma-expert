@@ -6,9 +6,11 @@ DEBUG = True
 # Allow everything locally.
 ALLOWED_HOSTS = ['*']
 
-# Set EMAIL_BACKEND to console backend so verification/reset emails print
-# to the terminal in development without requiring live SMTP credentials.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# If live SMTP credentials are provided, use SMTP; otherwise fallback to console backend.
+if env('EMAIL_HOST_USER', default='') and env('EMAIL_HOST_PASSWORD', default=''):
+    EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Relax CORS during local frontend development.
 CORS_ALLOW_ALL_ORIGINS = True

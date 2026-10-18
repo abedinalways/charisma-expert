@@ -57,8 +57,8 @@ export default function SignUp() {
     setErrors({})
     setGlobalError('')
     try {
-      await authApi.register(form)
-      navigate('/verify-otp', { state: { fromSignUp: true, email: form.email } })
+      const res = await authApi.register(form)
+      navigate('/verify-otp', { state: { fromSignUp: true, email: form.email, devOtp: res?.data?.dev_otp } })
     } catch (err) {
       const data = err?.response?.data
       if (data && typeof data === 'object') {

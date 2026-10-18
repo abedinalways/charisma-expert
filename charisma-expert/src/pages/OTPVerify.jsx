@@ -8,9 +8,15 @@ const OTP_LENGTH = 6
 export default function OTPVerify() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { fromSignUp, fromForgotPassword, email, newPassword } = location.state || {}
+  const { fromSignUp, fromForgotPassword, email, newPassword, devOtp } = location.state || {}
 
-  const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''))
+  const [devCode, setDevCode] = useState(devOtp || '')
+  const [otp, setOtp] = useState(() => {
+    if (devOtp && typeof devOtp === 'string' && devOtp.length === OTP_LENGTH) {
+      return devOtp.split('')
+    }
+    return Array(OTP_LENGTH).fill('')
+  })
   const inputs = useRef([])
   const [loading, setLoading] = useState(false)
   const [resending, setResending] = useState(false)
@@ -82,10 +88,15 @@ export default function OTPVerify() {
     setResendMsg('')
     setError('')
     try {
+      let res
       if (fromSignUp) {
-        await authApi.resendVerification({ email })
+        res = await authApi.resendVerification({ email })
       } else {
-        await authApi.requestPasswordReset({ email })
+        res = await authApi.requestPasswordReset({ email })
+      }
+      if (res?.data?.dev_otp) {
+        setDevCode(res.data.dev_otp)
+        setOtp(res.data.dev_otp.split(''))
       }
       setResendMsg('A new code has been sent to your email.')
     } catch {
@@ -127,6 +138,11 @@ export default function OTPVerify() {
         {resendMsg && (
           <div className="mb-5 px-4 py-3 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm text-center">
             {resendMsg}
+          </div>
+        )}
+        {devCode && (
+          <div className="mb-5 px-4 py-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-xl text-xs text-center">
+            <span className="font-bold">Dev Code:</span> {devCode} (Auto-filled for instant testing)
           </div>
         )}
 

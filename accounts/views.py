@@ -43,12 +43,14 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        send_verification_email(user)
-        return Response(
-            {'message': 'Account created. Check your email to verify your address.',
-             'user': UserProfileSerializer(user).data},
-            status=status.HTTP_201_CREATED,
-        )
+        code = send_verification_email(user)
+        resp_data = {
+            'message': 'Account created. Check your email to verify your address.',
+            'user': UserProfileSerializer(user).data,
+        }
+        if settings.DEBUG:
+            resp_data['dev_otp'] = code
+        return Response(resp_data, status=status.HTTP_201_CREATED)
 
 
 class VerifyEmailView(APIView):
@@ -86,11 +88,15 @@ class ResendVerificationView(APIView):
         user = User.objects.filter(email=email).first()
         # Always return the same response (don't leak which emails exist), and
         # respect the resend cooldown to prevent code spamming.
+        code = None
         if user and not user.email_verified and not seconds_until_resend(
             user, EmailOTP.Purpose.EMAIL_VERIFICATION
         ):
-            send_verification_email(user)
-        return Response({'message': 'If the account exists and is unverified, an email was sent.'})
+            code = send_verification_email(user)
+        resp_data = {'message': 'If the account exists and is unverified, an email was sent.'}
+        if settings.DEBUG and code:
+            resp_data['dev_otp'] = code
+        return Response(resp_data)
 
 
 class LoginView(TokenObtainPairView):
