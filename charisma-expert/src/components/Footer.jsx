@@ -21,7 +21,6 @@ const footerLinks = {
 }
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-[#111625] text-gray-300 font-sans pt-16 pb-8 border-t border-gray-800">
@@ -94,7 +93,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-xs text-gray-400">
-            © {currentYear} KLYVOREK. All rights reserved.
+            © 2027 KLYVOREK. All rights reserved.
           </p>
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
             <Shield size={14} strokeWidth={1.5} className="shrink-0 text-blue-400" />
