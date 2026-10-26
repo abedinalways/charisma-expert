@@ -243,6 +243,14 @@ export default function Pricing() {
                 })}
               </div>
 
+              {/* Recurring Subscription Terms & Policy Disclosure */}
+              <div className="mt-8 max-w-3xl mx-auto bg-gray-50 border border-gray-200/90 rounded-2xl p-5 sm:p-6 text-center text-xs text-gray-600 leading-relaxed shadow-xs">
+                <p className="font-semibold text-gray-800 mb-1.5 text-sm">Subscription & Renewal Terms</p>
+                <p>
+                  Paid subscriptions renew automatically on your monthly billing anniversary. Unused allowances expire at the end of each billing period and do not roll over. New allowances become available upon successful renewal. No automatic overage fees are ever charged. You can cancel future renewals at any time from your dashboard while retaining paid access through the end of your current billing period.
+                </p>
+              </div>
+
               {/* Scenarios Purchase Notice */}
               <div className="mt-12 max-w-3xl mx-auto bg-blue-50/80 border border-blue-200/90 rounded-2xl p-6 sm:p-7 text-center shadow-xs">
                 <p className="text-gray-800 text-sm sm:text-base font-medium mb-4 leading-relaxed">
