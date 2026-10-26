@@ -80,9 +80,14 @@ export default function OfficerDashboard() {
   const arrestWarrantsUsed = subscription?.arrest_warrants_generated_this_month ?? 0;
   const warrantsUsed = subscription?.warrants_generated_this_month ?? (searchWarrantsUsed + arrestWarrantsUsed);
 
+  const warrantsLimit = subscription?.plan?.warrant_document_limit ?? 10;
   const totalUsed = docsUsed + warrantsUsed;
   const totalLimit = docsLimit ?? 3;
   const progressPct = totalLimit > 0 ? Math.min((totalUsed / totalLimit) * 100, 100) : 0;
+
+  const renewalDate = subscription?.current_period_end
+    ? new Date(subscription.current_period_end).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+    : null;
 
   // Clean officer display name
   const displayName = user?.full_name?.trim() 
@@ -114,7 +119,7 @@ export default function OfficerDashboard() {
         </div>
 
         {/* Right side quota / plan widget */}
-        <div className="relative z-10 bg-[#f8fafc] rounded-2xl p-4 sm:p-5 border border-gray-200/90 shrink-0 w-full xl:w-[420px] shadow-xs">
+        <div className="relative z-10 bg-[#f8fafc] rounded-2xl p-4 sm:p-5 border border-gray-200/90 shrink-0 w-full xl:w-[440px] shadow-xs">
           {subLoading ? (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="animate-spin text-gray-400" size={20} />
@@ -132,7 +137,7 @@ export default function OfficerDashboard() {
                   </div>
                 </div>
 
-                {isEvaluationPlan && (
+                {isEvaluationPlan ? (
                   <button 
                     onClick={() => navigate('/pricing')}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl shadow-xs transition-all hover:shadow"
@@ -140,22 +145,71 @@ export default function OfficerDashboard() {
                     <Crown size={14} />
                     Upgrade to Plus
                   </button>
+                ) : (
+                  <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${
+                    subscription?.cancel_at_period_end 
+                      ? 'bg-amber-100 text-amber-800' 
+                      : 'bg-emerald-100 text-emerald-800'
+                  }`}>
+                    {subscription?.cancel_at_period_end ? 'Cancels at Period End' : 'Active'}
+                  </span>
                 )}
               </div>
 
-              {/* Progress bar */}
-              <div>
-                <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${progressPct}%` }}
-                  />
+              {isEvaluationPlan ? (
+                /* Free Evaluation Progress Bar */
+                <div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${progressPct}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] text-gray-500 mt-1.5 font-medium">
+                    <span>{totalUsed}/{totalLimit} Total Documents Generated</span>
+                    <span>Evaluation Limit</span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center text-[11px] text-gray-500 mt-1.5 font-medium">
-                  <span>{totalUsed}/{totalLimit} Total Documents Generated</span>
-                  <span>{isEvaluationPlan ? 'Evaluation Limit' : 'Monthly Quota'}</span>
+              ) : (
+                /* Paid Plan (Plus) Remaining Allowance Breakdown */
+                <div className="space-y-2 pt-1 border-t border-gray-200/70">
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-white rounded-lg p-2 border border-gray-200/80">
+                      <span className="text-[10px] text-gray-500 block font-medium">Incident Reports</span>
+                      <span className="font-bold text-gray-900 text-sm">
+                        {docsLimit ? Math.max(0, docsLimit - docsUsed) : 'Unlimited'}
+                      </span>
+                      <span className="text-[10px] text-gray-400 block">
+                        {docsLimit ? `of ${docsLimit} remaining` : 'available'}
+                      </span>
+                    </div>
+
+                    <div className="bg-white rounded-lg p-2 border border-gray-200/80">
+                      <span className="text-[10px] text-gray-500 block font-medium">Warrants</span>
+                      <span className="font-bold text-gray-900 text-sm">
+                        {warrantsLimit ? Math.max(0, warrantsLimit - warrantsUsed) : 'Unlimited'}
+                      </span>
+                      <span className="text-[10px] text-gray-400 block">
+                        {warrantsLimit ? `of ${warrantsLimit} remaining` : 'available'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center text-[11px] text-gray-500 font-medium pt-0.5">
+                    <span>
+                      {renewalDate 
+                        ? `${subscription?.cancel_at_period_end ? 'Access until' : 'Next renewal'}: ${renewalDate}` 
+                        : 'Renews monthly'}
+                    </span>
+                    <button
+                      onClick={() => navigate('/dashboard/billing')}
+                      className="text-blue-600 hover:text-blue-800 font-semibold"
+                    >
+                      Manage
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>

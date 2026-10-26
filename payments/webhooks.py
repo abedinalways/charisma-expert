@@ -118,6 +118,7 @@ def _on_checkout_complete(session):
     sub.search_warrants_generated_this_month = 0
     sub.arrest_warrants_generated_this_month = 0
     sub.cancel_at_period_end = False
+    sub.usage_reset_date = sub.current_period_start.date() if sub.current_period_start else datetime.now(timezone.utc).date()
     sub.save()
     logger.info('Subscription activated: %s → %s', user.email, plan_name)
 
@@ -126,8 +127,16 @@ def _on_subscription_updated(stripe_sub):
     try:
         sub = Subscription.objects.get(stripe_subscription_id=stripe_sub['id'])
         sub.status = stripe_sub['status']
-        sub.current_period_start = _ts(stripe_sub['current_period_start'])
-        sub.current_period_end = _ts(stripe_sub['current_period_end'])
+        new_start = _ts(stripe_sub.get('current_period_start'))
+        new_end = _ts(stripe_sub.get('current_period_end'))
+
+        # If renewal occurred and period advanced forward, reset usage for the new billing cycle:
+        if sub.current_period_end and new_end and new_end > sub.current_period_end and stripe_sub.get('status') == 'active':
+            sub.reset_monthly_usage()
+            logger.info('Subscription period rolled over to %s — reset usage for %s', new_end, sub.user.email)
+
+        sub.current_period_start = new_start
+        sub.current_period_end = new_end
         sub.cancel_at_period_end = bool(stripe_sub.get('cancel_at_period_end'))
         sub.save(update_fields=[
             'status', 'current_period_start', 'current_period_end', 'cancel_at_period_end',
@@ -209,6 +218,18 @@ def _on_payment_succeeded(invoice):
                 'description': f"Invoice {invoice.get('number') or invoice['id']}",
             },
         )
+    # For recurring subscription renewal invoices, reset allowances so unused usage expires and new quota is available:
+    billing_reason = invoice.get('billing_reason')
+    sub = getattr(user, 'subscription', None)
+    if sub and sub.plan and sub.plan.name != 'free':
+        if billing_reason == 'subscription_cycle':
+            sub.reset_monthly_usage()
+            if invoice.get('period_start') and invoice.get('period_end'):
+                sub.current_period_start = _ts(invoice.get('period_start'))
+                sub.current_period_end = _ts(invoice.get('period_end'))
+                sub.save(update_fields=['current_period_start', 'current_period_end'])
+            logger.info('Subscription cycle payment succeeded — reset monthly usage for %s', user.email)
+
     logger.info('Payment succeeded: %s (invoice=%s)', user.email, invoice.get('id'))
 
 
