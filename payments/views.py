@@ -98,6 +98,8 @@ class CreateCheckoutSessionView(APIView):
         sub.cancel_at_period_end = False
         sub.current_period_start = _ts(updated['current_period_start'])
         sub.current_period_end = _ts(updated['current_period_end'])
+        if sub.current_period_start:
+            sub.usage_reset_date = sub.current_period_start.date()
         sub.save()
         return Response({
             'message': f'Plan changed to {plan.display_name}.',
