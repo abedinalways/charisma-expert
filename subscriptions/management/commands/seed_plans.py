@@ -46,8 +46,8 @@ def _default_plans() -> list:
         {
             'name': 'standard',
             'display_name': 'Plus',
-            'description': ('For individual officers. 50 incident reports per month, 10 search or '
-                            'arrest warrant drafts per month, and editable DOCX export.'),
+            'description': ('For individual officers. 50 incident reports and 10 search or '
+                            'arrest warrant drafts per month. Renews automatically on your monthly billing anniversary.'),
             'price_monthly': 29, 'price_yearly': 290,
             'stripe_price_id_monthly': _bootstrap_price(existing, 'standard', 'stripe_price_id_monthly', 'STRIPE_PRICE_STANDARD_MONTHLY'),
             'stripe_price_id_yearly': _bootstrap_price(existing, 'standard', 'stripe_price_id_yearly', 'STRIPE_PRICE_STANDARD_YEARLY'),

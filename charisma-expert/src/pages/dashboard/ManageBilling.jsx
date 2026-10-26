@@ -91,32 +91,78 @@ export default function ManageBilling() {
       {message && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 font-medium">{message}</div>}
       {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium">{error}</div>}
 
-      <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-xs">
-            <CreditCard size={24} />
+      <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs p-6 sm:p-7 flex flex-col gap-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-xs">
+              <CreditCard size={24} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Current Plan</p>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">{currentPlan?.display_name || 'Free Evaluation'}</h2>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                {isEvaluation
+                  ? 'Try KLYVOREK free for up to 3 document generations. No credit card required.'
+                  : isExpired
+                  ? 'Free evaluation expired - choose a paid plan to continue'
+                  : currentPlan?.name === 'free'
+                  ? 'Free evaluation'
+                  : subscription?.current_period_end
+                  ? `Renews on ${new Date(subscription.current_period_end).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} (billing anniversary)`
+                  : `Billed ${subscription?.billing_period || 'monthly'} - renews automatically`}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Current Plan</p>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">{currentPlan?.display_name || 'Free Evaluation'}</h2>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">
-              {isEvaluation
-                ? 'Try KLYVOREK free for up to 3 document generations. No credit card required.'
-                : isExpired
-                ? 'Free evaluation expired - choose a paid plan to continue'
-                : currentPlan?.name === 'free'
-                ? 'Free evaluation'
-                : `Billed ${subscription?.billing_period || 'monthly'} - renews automatically`}
-            </p>
-          </div>
+
+          {subscription?.cancel_at_period_end ? (
+            <div className="bg-amber-50 text-amber-800 px-4 py-3 rounded-xl border border-amber-200 flex items-start gap-3 max-w-md">
+              <AlertCircle size={20} className="shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm">
+                <p className="font-semibold">Subscription Canceling</p>
+                <p>Your subscription will not renew and your paid access will remain active through {new Date(subscription.current_period_end).toLocaleDateString()}.</p>
+              </div>
+            </div>
+          ) : !isEvaluation && currentPlan?.name !== 'free' && (
+            <div className="bg-emerald-50 text-emerald-800 px-4 py-2.5 rounded-xl border border-emerald-200 text-xs font-semibold self-start md:self-auto">
+              ✓ Auto-Renewal Active
+            </div>
+          )}
         </div>
 
-        {subscription?.cancel_at_period_end && (
-          <div className="bg-amber-50 text-amber-800 px-4 py-3 rounded-xl border border-amber-200 flex items-start gap-3 max-w-md">
-            <AlertCircle size={20} className="shrink-0 mt-0.5" />
-            <div className="text-xs sm:text-sm">
-              <p className="font-semibold">Subscription Canceling</p>
-              <p>Your subscription will not renew and will end on {new Date(subscription.current_period_end).toLocaleDateString()}.</p>
+        {/* Paid Plan Allowance Status */}
+        {!isEvaluation && currentPlan?.name !== 'free' && (
+          <div className="border-t border-gray-100 pt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-200/70">
+              <span className="text-xs text-gray-500 font-medium block">Incident Reports Allowance</span>
+              <div className="flex items-baseline gap-1.5 mt-1">
+                <span className="text-xl font-bold text-gray-900">
+                  {currentPlan?.document_limit 
+                    ? Math.max(0, currentPlan.document_limit - (subscription?.documents_generated_this_month || 0))
+                    : 'Unlimited'}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {currentPlan?.document_limit ? `of ${currentPlan.document_limit} remaining` : 'available'}
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-200/70">
+              <span className="text-xs text-gray-500 font-medium block">Warrants Allowance (Search & Arrest)</span>
+              <div className="flex items-baseline gap-1.5 mt-1">
+                <span className="text-xl font-bold text-gray-900">
+                  {currentPlan?.warrant_document_limit 
+                    ? Math.max(0, currentPlan.warrant_document_limit - (subscription?.warrants_generated_this_month || 0))
+                    : 'Unlimited'}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {currentPlan?.warrant_document_limit ? `of ${currentPlan.warrant_document_limit} remaining` : 'available'}
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-200/70 flex flex-col justify-center text-xs text-gray-500">
+              <span className="font-semibold text-gray-700">Billing Cycle Policy:</span>
+              <span className="mt-0.5 leading-snug">Unused allowances expire on your monthly anniversary and reset upon successful renewal. No overage fees.</span>
             </div>
           </div>
         )}
