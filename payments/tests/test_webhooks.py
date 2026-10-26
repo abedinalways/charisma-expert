@@ -7,6 +7,7 @@ Regression tests for the Stripe webhook fixes:
   re-zeroing documents_generated_this_month for free on a replayed
   checkout.session.completed.
 """
+from datetime import datetime, timezone as dt_timezone
 from unittest.mock import MagicMock, patch
 
 from django.contrib.auth import get_user_model
@@ -123,3 +124,51 @@ class PaymentInvoiceWiringTests(TestCase):
         mock_construct.return_value = _invoice_event('evt_inv_2', 'cus_does_not_exist')
         handle_webhook(b'payload', 'sig')  # must not raise
         self.assertFalse(Invoice.objects.filter(stripe_invoice_id='in_1').exists())
+
+    @patch('stripe.Webhook.construct_event')
+    def test_subscription_cycle_invoice_resets_monthly_usage(self, mock_construct):
+        paid_plan = Plan.objects.create(name='plus-plan', display_name='Plus', document_limit=50)
+        self.sub.plan = paid_plan
+        self.sub.status = 'active'
+        self.sub.documents_generated_this_month = 42
+        self.sub.warrants_generated_this_month = 8
+        self.sub.save()
+
+        event = _invoice_event('evt_renewal_1', 'cus_42')
+        event['data']['object']['billing_reason'] = 'subscription_cycle'
+        mock_construct.return_value = event
+
+        handle_webhook(b'payload', 'sig')
+
+        self.sub.refresh_from_db()
+        self.assertEqual(self.sub.documents_generated_this_month, 0)
+        self.assertEqual(self.sub.warrants_generated_this_month, 0)
+
+    @patch('stripe.Webhook.construct_event')
+    def test_subscription_updated_with_advanced_period_resets_usage(self, mock_construct):
+        paid_plan = Plan.objects.create(name='plus-plan-2', display_name='Plus', document_limit=50)
+        self.sub.plan = paid_plan
+        self.sub.status = 'active'
+        self.sub.stripe_subscription_id = 'sub_cycle_1'
+        self.sub.current_period_end = datetime(2025, 10, 25, tzinfo=dt_timezone.utc)
+        self.sub.documents_generated_this_month = 35
+        self.sub.save()
+
+        event = {
+            'id': 'evt_sub_cycle_1',
+            'type': 'customer.subscription.updated',
+            'data': {'object': {
+                'id': 'sub_cycle_1',
+                'status': 'active',
+                'current_period_start': 1761400000,
+                'current_period_end': 1764000000,  # future date > previous period_end
+                'cancel_at_period_end': False,
+            }},
+        }
+        mock_construct.return_value = event
+
+        handle_webhook(b'payload', 'sig')
+
+        self.sub.refresh_from_db()
+        self.assertEqual(self.sub.documents_generated_this_month, 0)
+
