@@ -312,7 +312,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_BEAT_SCHEDULE = {
     'reset-monthly-usage': {
         'task': 'subscriptions.tasks.reset_monthly_usage',
-        'schedule': crontab(day_of_month=1, hour=0, minute=0),
+        'schedule': crontab(hour=0, minute=30),  # daily check for anniversary rollovers
     },
     'expire-trials': {
         'task': 'subscriptions.tasks.expire_trials',
